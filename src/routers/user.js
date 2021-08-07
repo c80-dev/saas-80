@@ -92,7 +92,7 @@ router.post("/users", async (req, res) => {
   }
 });
 
-router.use(checkJwt);
+// router.use(checkJwt);
 
 router.get("/users", async (req, res) => {
   try {
@@ -161,12 +161,10 @@ router.patch("/users/:id", async (req, res) => {
     }
 
     if (e.errors.name) {
-      return res
-        .status(400)
-        .send({
-          error:
-            "Could not update user: Invalid name: Name cannot contain a number",
-        });
+      return res.status(400).send({
+        error:
+          "Could not update user: Invalid name: Name cannot contain a number",
+      });
     }
 
     if (e.errors.email) {
