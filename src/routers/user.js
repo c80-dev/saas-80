@@ -92,7 +92,7 @@ router.post("/users", async (req, res) => {
   }
 });
 
-// router.use(checkJwt);
+router.use(checkJwt);
 
 router.get("/users", async (req, res) => {
   try {

@@ -22,6 +22,7 @@
     "jwks-rsa": "^2.0.4",
     "mongoose": "^5.13.5",
     "morgan": "^1.10.0",
+    "request": "^2.88.2",
     "twilio": "^3.66.1",
     "validator": "^13.6.0"
   },
