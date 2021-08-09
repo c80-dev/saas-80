@@ -2,8 +2,8 @@ const express = require("express");
 const router = new express.Router();
 const request = require("request");
 
-router.get("/token", async (req, res) => {
-  var options = {
+router.get("/token", (req, res) => {
+  const options = {
     method: "POST",
     url: "https://dev-w0ycluoe.us.auth0.com/oauth/token",
     headers: { "content-type": "application/json" },
@@ -12,7 +12,7 @@ router.get("/token", async (req, res) => {
 
   try {
     request(options, function (error, response, body) {
-      if (error) throw new Error(error);
+      if (error) res.status(500).send({ error: "Unable to fetch token" });
 
       res.status(200).send({
         message: "Fetched 1 token successfully",

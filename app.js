@@ -8,7 +8,9 @@ const morgan = require("morgan");
 // Require local files
 require("./src/db/mongoose");
 const tokenRouter = require("./src/routers/token");
+
 const userRouter = require("./src/routers/user");
+const verificationRouter = require("./src/routers/verify");
 
 const app = express();
 
@@ -17,7 +19,9 @@ app.use(helmet());
 app.use(cors());
 
 app.use(tokenRouter);
+
 app.use(userRouter);
+app.use(verificationRouter);
 
 // Declare port
 const PORT = process.env.PORT || 5000;

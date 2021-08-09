@@ -3,15 +3,8 @@ const router = new express.Router();
 const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 
-// Enable local enironment variables
-require("dotenv").config();
-
-const twilioClient = require("twilio")(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
-
 const User = require("../models/user");
+const { sendOTP } = require("../functions/verifications");
 
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
@@ -27,30 +20,13 @@ const checkJwt = jwt({
   algorithms: ["RS256"],
 });
 
-const sendPhoneNumberVerification = async (user) => {
-  await twilioClient.verify
-    .services(process.env.TWILIO_SERVICE_SID)
-    .verifications.create({
-      to: `+234${user.phonenumber}`,
-      channel: "sms",
-    })
-    .then(async () => {
-      const data = await User.findById(user._id);
-      data.verifiedPhoneNumber = false;
-      await data.save();
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-};
-
 router.post("/users", async (req, res) => {
   const user = new User(req.body);
 
   try {
     await user.save();
 
-    // if (user.phonenumber) sendPhoneNumberVerification(user);
+    if (user.phonenumber) sendOTP(user);
 
     res.status(201).send({ message: "User created successfully", user });
   } catch (e) {
