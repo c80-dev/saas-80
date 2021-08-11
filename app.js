@@ -8,6 +8,7 @@ const morgan = require("morgan");
 // Require local files
 require("./src/db/mongoose");
 const tokenRouter = require("./src/routers/token");
+const analysisRouter = require("./src/routers/analysis");
 
 const userRouter = require("./src/routers/user");
 const verificationRouter = require("./src/routers/verify");
@@ -19,6 +20,7 @@ app.use(helmet());
 app.use(cors());
 
 app.use(tokenRouter);
+app.use(analysisRouter);
 
 app.use(userRouter);
 app.use(verificationRouter);
