@@ -5,7 +5,7 @@ const Ticket = require("../models/tickets");
 
 router.post("/tickets", async (req, res) => {
   const ticketId = Math.floor(10000 + Math.random() * 90000);
-  const ticket = new Ticket({ ...req.body, ticketId });
+  const ticket = new Ticket({ ...req.body, ticketId: `${ticketId}` });
 
   try {
     await ticket.save();
