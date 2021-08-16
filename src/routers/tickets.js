@@ -5,7 +5,7 @@ const Ticket = require("../models/tickets");
 
 router.post("/tickets", async (req, res) => {
   const ticketId = Math.floor(10000 + Math.random() * 90000);
-  const ticket = new Ticket({ ...req.body, ticketId: `#${ticketId}` });
+  const ticket = new Ticket({ ...req.body, ticketId });
 
   try {
     await ticket.save();
@@ -78,7 +78,7 @@ router.patch("/tickets/:id", async (req, res) => {
     await ticket[0].save();
     res.status(200).send({ message: "Ticket updated successfully", ticket });
   } catch (e) {
-    res.status(500).send({ error: "Could not update ticket" });
+    res.status(500).send({ error: "Could not update ticket", e });
   }
 });
 
