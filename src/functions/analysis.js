@@ -31,7 +31,7 @@ const readCSVFile = (path, res, params) => {
     } catch (error) {
       res
         .status(500)
-        .send({ error: "Something went wrong wile processing your request" });
+        .send({ error: "Something went wrong while processing your request" });
     }
   };
 
