@@ -185,6 +185,23 @@ const readXLSXFile = (path, res, params) => {
   });
 };
 
-const analysis = { readCSVFile, readXLSXFile };
+const updateTransaction = async (id, cols, res) => {
+  try {
+    const transaction = await Analysis.find({
+      transactionId: id,
+    });
+
+    transaction[0].data.cols = cols;
+    await transaction[0].save();
+
+    res
+      .status(200)
+      .send({ message: "Project updated successfully", transaction });
+  } catch (e) {
+    res.status(500).send({ error: "Could not update project", e });
+  }
+};
+
+const analysis = { readCSVFile, readXLSXFile, updateTransaction };
 
 module.exports = analysis;

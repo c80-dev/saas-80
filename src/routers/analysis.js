@@ -5,7 +5,11 @@ const multer = require("multer");
 
 const upload = multer({ dest: "src/routers/store/analysis/uploads" });
 
-const { readCSVFile, readXLSXFile } = require("../functions/analysis");
+const {
+  readCSVFile,
+  readXLSXFile,
+  updateTransaction,
+} = require("../functions/analysis");
 
 // require("dotenv").config();
 
@@ -35,7 +39,7 @@ router.post("/analyse", upload.single("file"), async (req, res) => {
   if (filename) {
     const path = `${__dirname}/store/analysis/uploads/${filename}`;
 
-    if (mimetype === "text/csv") {
+    if (mimetype === "application/octet-stream") {
       readCSVFile(path, res, params);
       return;
     }
@@ -49,6 +53,13 @@ router.post("/analyse", upload.single("file"), async (req, res) => {
 
     res.status(400).send({ error: "Invalid file type" });
   }
+});
+
+router.patch("/analyse/:id", (req, res) => {
+  const ticketId = req.params.id;
+  const cols = req.body.cols;
+
+  updateTransaction(ticketId, cols, res);
 });
 
 module.exports = router;
