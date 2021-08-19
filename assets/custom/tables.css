@@ -1,0 +1,59 @@
+.form-container {
+  max-width: 2000px !important;
+}
+
+.select-file-container {
+  padding: 20px 50px !important;
+}
+
+.custom-divider-container {
+  padding: 10px 50px !important;
+}
+
+.custom-divider-container p {
+  width: 100%;
+  font-weight: 800;
+}
+
+.custom-divider-container span {
+  font-weight: 400;
+}
+
+.custom-divider {
+  width: 100%;
+  color: #008000;
+}
+
+#errorMessage {
+  color: #ff0000;
+}
+
+.configuration {
+  margin-top: 20px;
+}
+
+.configuration h5 {
+  margin-top: 20px;
+  color: #e4e4e4;
+}
+
+.tableHeaders {
+  border: none;
+  font-size: 10px;
+}
+
+.tableDefaultType {
+  border: none;
+  border-bottom: 1px solid #222;
+  font-size: 10px;
+}
+
+.tableDefaultType::placeholder {
+  font-size: 10px;
+}
+
+#basicTableHeader2 select {
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+}
