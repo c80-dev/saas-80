@@ -1,24 +1,28 @@
 const express = require("express");
-const router = new express.Router();
 const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 
 const User = require("../models/user");
 const { sendOTP } = require("../functions/verifications");
 
-const checkJwt = jwt({
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `https://dev-w0ycluoe.us.auth0.com/.well-known/jwks.json`,
-  }),
+// Middleware
+const auth = require("../middleware/auth");
 
-  // Validate the audience and the issuer.
-  audience: "https://sass-80-api",
-  issuer: `https://dev-w0ycluoe.us.auth0.com/`,
-  algorithms: ["RS256"],
-});
+const router = new express.Router();
+
+// const checkJwt = jwt({
+//   secret: jwksRsa.expressJwtSecret({
+//     cache: true,
+//     rateLimit: true,
+//     jwksRequestsPerMinute: 5,
+//     jwksUri: `https://dev-w0ycluoe.us.auth0.com/.well-known/jwks.json`,
+//   }),
+
+//   // Validate the audience and the issuer.
+//   audience: "https://sass-80-api",
+//   issuer: `https://dev-w0ycluoe.us.auth0.com/`,
+//   algorithms: ["RS256"],
+// });
 
 router.post("/users", async (req, res) => {
   const user = new User(req.body);
@@ -26,9 +30,11 @@ router.post("/users", async (req, res) => {
   try {
     await user.save();
 
+    const token = await user.generateAuthToken();
+
     if (user.phonenumber) sendOTP(user);
 
-    res.status(201).send({ message: "User created successfully", user });
+    res.status(201).send({ message: "User created successfully", user, token });
   } catch (e) {
     if (e.name === "MongoError") {
       if (e.keyValue.email) {
@@ -68,9 +74,38 @@ router.post("/users", async (req, res) => {
   }
 });
 
-router.use(checkJwt);
+router.post("/users/login", async (req, res) => {
+  try {
+    const user = await User.findByCredentials(
+      req.body.email,
+      req.body.password
+    );
 
-router.get("/users", async (req, res) => {
+    const token = await user.generateAuthToken();
+
+    res.send({ user, token });
+  } catch (e) {
+    res.status(400).send({ error: "Invalid username or password" });
+  }
+});
+
+router.post("/users/logout", auth, async (req, res) => {
+  try {
+    req.user.tokens = req.user.tokens.filter((token) => {
+      return token.token !== req.token;
+    });
+
+    await req.user.save();
+
+    res.status(200).send({ message: "Logged out successfully" });
+  } catch (e) {
+    res.status(500).send();
+  }
+});
+
+// router.use(checkJwt);
+
+router.get("/users", auth, async (req, res) => {
   try {
     const users = await User.find({});
     res
@@ -94,8 +129,8 @@ router.post("/users/:id", async (req, res) => {
   }
 });
 
-router.patch("/users/:id", async (req, res) => {
-  const _id = req.params.id;
+router.patch("/users/me", auth, async (req, res) => {
+  const _id = req.user.id;
   const options = req.body;
 
   const updates = Object.keys(options);
@@ -117,7 +152,7 @@ router.patch("/users/:id", async (req, res) => {
     });
 
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(_id);
     updates.forEach((update) => (user[update] = req.body[update]));
     await user.save();
 

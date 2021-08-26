@@ -1,11 +1,17 @@
 const express = require("express");
 const router = new express.Router();
 
+const auth = require("../middleware/auth");
+
 const Ticket = require("../models/tickets");
 
-router.post("/tickets", async (req, res) => {
+router.post("/tickets", auth, async (req, res) => {
   const ticketId = Math.floor(10000 + Math.random() * 90000);
-  const ticket = new Ticket({ ...req.body, ticketId: `${ticketId}` });
+  const ticket = new Ticket({
+    ...req.body,
+    owner: req.user._id,
+    ticketId: `${ticketId}`,
+  });
 
   try {
     await ticket.save();
@@ -15,9 +21,12 @@ router.post("/tickets", async (req, res) => {
   }
 });
 
-router.get("/tickets", async (req, res) => {
+router.get("/tickets", auth, async (req, res) => {
   try {
-    const tickets = await Ticket.find({});
+    const tickets = await Ticket.find({
+      owner: req.user._id,
+    });
+    console.log(tickets);
     res
       .status(200)
       .send({ message: `Fetched ${tickets.length} record(s)`, tickets });
@@ -30,11 +39,11 @@ router.post("/tickets/:id", async (req, res) => {
   const ticketId = req.params.id;
 
   try {
-    const ticket = await Ticket.find({
+    const ticket = await Ticket.findOne({
       ticketId,
     });
 
-    if (ticket.length === 0) {
+    if (!ticket) {
       res.status(404).send({ error: `Ticket not found` });
     }
 
@@ -69,13 +78,13 @@ router.patch("/tickets/:id", async (req, res) => {
     });
 
   try {
-    const ticket = await Ticket.find({
+    const ticket = await Ticket.findOne({
       ticketId,
     });
 
-    updates.forEach((update) => (ticket[0][update] = req.body[update]));
-    ticket[0].status = "resolved";
-    await ticket[0].save();
+    updates.forEach((update) => (ticket[update] = req.body[update]));
+    ticket.status = "resolved";
+    await ticket.save();
     res.status(200).send({ message: "Ticket updated successfully", ticket });
   } catch (e) {
     res.status(500).send({ error: "Could not update ticket", e });

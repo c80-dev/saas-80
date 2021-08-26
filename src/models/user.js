@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // Enable local enironment variables
 require("dotenv").config();
@@ -66,13 +67,60 @@ const schema = new mongoose.Schema({
   phoneVerificationChannel: {
     type: String,
   },
+  tokens: [
+    {
+      token: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 });
+
+schema.virtual("tickets", {
+  ref: "Ticket",
+  localField: "_id",
+  foreignField: "owner",
+});
+
+schema.statics.findByCredentials = async (email, password) => {
+  const user = await User.findOne({
+    email,
+  });
+
+  if (!user) {
+    throw new Error("Incorrect Email or Password");
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    throw new Error("Incorrect Email or Password");
+  }
+
+  return user;
+};
+
+schema.methods.generateAuthToken = async function () {
+  const user = this;
+
+  const token = jwt.sign(
+    { _id: user._id.toString() },
+    "sass-80-qwertyuioplkjhgfdsazxcvbnm"
+  );
+
+  user.tokens = user.tokens.concat({ token });
+
+  await user.save();
+
+  return token;
+};
 
 schema.methods.toJSON = function () {
   const user = this;
   const userObject = user.toObject();
 
   delete userObject.password;
+  delete userObject.tokens;
 
   if (!userObject.phonenumber) delete userObject.verifiedPhoneNumber;
 
@@ -81,17 +129,11 @@ schema.methods.toJSON = function () {
 
 schema.pre("save", async function (next) {
   const user = this;
-  const userObject = user.toObject();
 
   if (user.isModified("password")) {
-    userObject.password = await bcrypt.hash(user.password, 8);
+    user.password = await bcrypt.hash(user.password, 8);
   }
 
-  if (user.isModified("phonenumber")) {
-    userObject.verifiedPhoneNumber = false;
-  }
-
-  return userObject;
   next();
 });
 

@@ -10,6 +10,10 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  category: {
+    type: String,
+    required: true,
+  },
   body: {
     type: String,
     required: true,
@@ -21,8 +25,13 @@ const schema = new mongoose.Schema({
   response: {
     type: String,
   },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
+  },
 });
 
-const Analysis = mongoose.model("Tickets", schema);
+const Ticket = mongoose.model("Ticket", schema);
 
-module.exports = Analysis;
+module.exports = Ticket;
