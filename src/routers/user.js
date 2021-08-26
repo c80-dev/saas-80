@@ -10,20 +10,6 @@ const auth = require("../middleware/auth");
 
 const router = new express.Router();
 
-// const checkJwt = jwt({
-//   secret: jwksRsa.expressJwtSecret({
-//     cache: true,
-//     rateLimit: true,
-//     jwksRequestsPerMinute: 5,
-//     jwksUri: `https://dev-w0ycluoe.us.auth0.com/.well-known/jwks.json`,
-//   }),
-
-//   // Validate the audience and the issuer.
-//   audience: "https://sass-80-api",
-//   issuer: `https://dev-w0ycluoe.us.auth0.com/`,
-//   algorithms: ["RS256"],
-// });
-
 router.post("/users", async (req, res) => {
   const user = new User(req.body);
 
