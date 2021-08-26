@@ -1,0 +1,16 @@
+#invalid-email {
+  margin-top: 5px;
+  color: #ff0000;
+}
+
+#error-message {
+  margin-top: 20px;
+  font-weight: 400;
+  color: #ff0000;
+  font-size: 18px;
+}
+
+.sign-in-text {
+  color: green;
+  margin-top: 10px;
+}

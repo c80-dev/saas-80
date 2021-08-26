@@ -1,0 +1,24 @@
+#ticket-body {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+#alert {
+  position: absolute;
+  top: 68px;
+  right: 10px;
+  z-index: 100 !important;
+  max-width: 400px;
+  transition: all 0.8s ease-in-out;
+}
+
+.slide {
+  margin-right: -500px;
+}
+
+#error-message {
+  color: #ff0000;
+  display: block;
+  margin-bottom: 20px !important;
+}

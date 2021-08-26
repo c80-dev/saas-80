@@ -2,36 +2,32 @@ const select = (name) => {
   return document.getElementById(name);
 };
 
+// API URL
 const url = "https://sass-80.herokuapp.com/analyse";
 
 let column;
 let id;
 
 const uploadFile = () => {
-  const input = select("file");
-  const file = input.files[0];
-
-  const fileName = select("fileName");
-  const fileSize = select("fileSize");
+  const file = select("file").files[0],
+    fileName = select("fileName"),
+    fileSize = select("fileSize");
 
   if (!file) {
     return;
   }
 
-  const nxtBtn1 = select("nxtBtn1");
-  nxtBtn1.classList.remove("hidden");
-
-  const successDiv = select("fileUploadDiv");
-  successDiv.classList.remove("hidden");
+  select("nxtBtn1").classList.remove("hidden");
+  select("fileUploadDiv").classList.remove("hidden");
 
   fileName.innerText = file.name;
   fileSize.innerText = `${file.size / 1000} kb`;
 };
 
+// Process File Function
 const processFile = async () => {
-  const input = select("file");
+  const file = select("file").files[0];
   const hasHeader = select("flexSwitchCheckDefault").checked;
-  const file = input.files[0];
 
   if (!file) {
     return;
@@ -53,10 +49,12 @@ const processFile = async () => {
 
   console.log(response);
 
+  // Fetch table headers
   const tableHeader = select("basicTableHeader");
   const tableHeader2 = select("basicTableHeader2");
   const tableHeader3 = select("basicTableHeader3");
 
+  // Fetch table body
   const tableBody = select("basicHeaderBody");
 
   select(
@@ -64,15 +62,19 @@ const processFile = async () => {
   ).innerHTML = `SHOWING ROW 1 - 100 OF ${response.rowCount}`;
 
   response.cols.map((item) => {
+    /* Get input items for first header row */
     const node = document.createElement("th");
     node.innerHTML = `<input class="tableHeaders" placeholder="COLUMN HEADER" type="text" value=${item.title}>`;
-    // const textnode = document.createTextNode(item.title);
-    // node.appendChild(textnode);
 
     tableHeader.appendChild(node);
+    /* ************ */
 
+    /* Get input items for second header row */
+
+    // Create options for default column type
     const options = ["String", "Number", "Date"];
 
+    // Create select dropdowns for default column types
     const selectDataType = document.createElement("select");
     selectDataType.className = "defaultType";
     selectDataType.innerHTML = options.map((item) => {
@@ -83,17 +85,22 @@ const processFile = async () => {
     node2.appendChild(selectDataType);
 
     tableHeader2.appendChild(node2);
+    /* ************ */
 
+    /* Get input items for second header row */
     const node3 = document.createElement("th");
     node3.innerHTML = `<input type="text" class="tableDefaultType" placeholder="Default value">`;
 
     tableHeader3.appendChild(node3);
+    /* ************ */
   });
 
   let tableBodyData = [];
 
   response.rows.map((item) => {
     const tableBodyRow = document.createElement("tr");
+
+    // Set the object item to an array with it's values
     const rows = Object.values(item);
 
     rows.map((element) => {
