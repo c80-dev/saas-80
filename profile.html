@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8" />
+    <title>Pages - Admin Dashboard UI Kit - Blank Page</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"
+    />
+    <script src="./components/head.js"></script>
+  </head>
+
+  <body class="fixed-header no-header menu-pin menu-behind">
+    <!--SIDEBPANEL-->
+    <script src="./components/sidepanal.js"></script>
+
+    <!-- START PAGE-CONTAINER -->
+    <div class="page-container">
+      <!-- HEADER -->
+      <script src="./components/header.js"></script>
+
+      <!-- START PAGE CONTENT WRAPPER -->
+      <div class="page-content-wrapper">
+        <!-- START PAGE CONTENT -->
+        <div class="content">
+          <div class="social-wrapper">
+            <div class="social" data-pages="social">
+              <!-- START JUMBOTRON -->
+              <div class="jumbotron" data-social="cover" data-pages="parallax">
+                <div class="cover-photo">
+                  <img alt="Cover photo" src="assets/img/social/cover.jpg" />
+                </div>
+                <div
+                  class="container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0"
+                >
+                  <div class="inner">
+                    <div class="pull-bottom bottom-left m-b-40 sm-p-l-15">
+                      <h5 class="text-white no-margin">Profile Page</h5>
+                      <h1 class="text-white no-margin">
+                        <span class="semi-bold">Waarii</span>
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- END JUMBOTRON -->
+              <div class="container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0">
+                <div class="feed">
+                  <!-- START DAY -->
+                  <div class="day" data-social="day">
+                    <!-- START ITEM -->
+                    <div
+                      class="
+                        card card-borderless
+                        no-border
+                        bg-transparent
+                        full-width
+                      "
+                      data-social="item"
+                    >
+                      <!-- START CONTAINER FLUID -->
+                      <div class="container-fluid p-t-30 p-b-30">
+                        <div class="row">
+                          <div class="col-lg-4">
+                            <div class="container-xs-height">
+                              <div class="row-xs-height">
+                                <div
+                                  class="
+                                    social-user-profile
+                                    col-xs-height
+                                    text-center
+                                    col-top
+                                  "
+                                >
+                                  <div
+                                    class="
+                                      thumbnail-wrapper
+                                      d48
+                                      circular
+                                      bordered
+                                      b-white
+                                    "
+                                  >
+                                    <img
+                                      alt="Avatar"
+                                      width="55"
+                                      height="55"
+                                      data-src-retina="assets/img/profiles/avatar_small2x.jpg"
+                                      data-src="assets/img/profiles/avatar.jpg"
+                                      src="assets/img/profiles/avatar.jpg"
+                                    />
+                                  </div>
+                                  <br />
+                                  <label>
+                                    <i
+                                      class="pg-icon text-success m-t-10"
+                                      style="cursor: pointer"
+                                      >camera</i
+                                    >
+                                    <input
+                                      type="file"
+                                      accept="image/*"
+                                      id="profile-image"
+                                      style="display: none"
+                                    />
+                                  </label>
+                                </div>
+                                <div class="col-xs-height p-l-20">
+                                  <h3
+                                    class="no-margin p-b-5"
+                                    id="user-name"
+                                  ></h3>
+                                  <p class="no-margin fs-16">
+                                    is excited about the new pages design
+                                    framework
+                                  </p>
+                                  <p class="hint-text m-t-5 small">
+                                    San Fransisco Bay | CEO at Pages.inc
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- END CONTAINER FLUID -->
+                    </div>
+                  </div>
+
+                  <div class="container-fluid p-t-30 p-b-30">
+                    <div class="row">
+                      <div class="col-8">
+                        <h3>Edit Profile</h3>
+                      </div>
+                    </div>
+
+                    <div
+                      class="alert alert-success hidden"
+                      id="success-message"
+                      role="alert"
+                    >
+                      <strong id="success-message-text"
+                        >Profile Updated Successfully</strong
+                      >
+                    </div>
+
+                    <div
+                      class="alert alert-danger hidden"
+                      id="error-message"
+                      role="alert"
+                    >
+                      <strong id="error-message-text"
+                        >Profile Updated Successfully</strong
+                      >
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <!-- START card -->
+                        <div class="card card-default">
+                          <!-- <div class="card-header">
+                            <div class="card-title">Option #one</div>
+                          </div> -->
+                          <div class="card-body">
+                            <span id="error-message"></span>
+                            <form
+                              class=""
+                              onsubmit="editProfile()"
+                              id="profile-form"
+                              role="form"
+                            >
+                              <div class="form-group form-group-default">
+                                <label>Full Name</label>
+                                <input
+                                  type="text"
+                                  id="profile-name"
+                                  class="form-control"
+                                />
+                              </div>
+
+                              <div class="form-group form-group-default">
+                                <label>Email</label>
+                                <input
+                                  type="email"
+                                  id="profile-email"
+                                  class="form-control"
+                                />
+                              </div>
+
+                              <div class="form-group form-group-default">
+                                <label>Phone Number</label>
+                                <input
+                                  type="number"
+                                  id="profile-phonenumber"
+                                  class="form-control"
+                                />
+                              </div>
+
+                              <div class="form-group form-group-default">
+                                <label>Password</label>
+                                <input
+                                  type="password"
+                                  id="profile-password"
+                                  class="form-control"
+                                  placeholder="**********"
+                                />
+                              </div>
+
+                              <div
+                                class="form-group hidden"
+                                id="confirm-password"
+                              >
+                                <p>
+                                  You are trying to change your password, please
+                                  confirm your new password
+                                </p>
+
+                                <div class="form-group form-group-default">
+                                  <label>Confirm Password</label>
+                                  <input
+                                    type="password"
+                                    id="confirm-profile-password"
+                                    class="form-control"
+                                    placeholder="**********"
+                                  />
+                                </div>
+                              </div>
+
+                              <button
+                                class="
+                                  btn btn-default btn-cons btn-animated
+                                  from-left
+                                  pull-right
+                                "
+                                type="submit"
+                              >
+                                Save
+                              </button>
+                            </form>
+                          </div>
+                        </div>
+                        <!-- END card -->
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END DAY -->
+                </div>
+                <!-- END FEED -->
+              </div>
+              <!-- END CONTAINER FLUID -->
+            </div>
+            <!-- /container -->
+          </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+
+        <!-- START COPYRIGHT -->
+        <script src="./components/footer.js"></script>
+        <!-- END COPYRIGHT -->
+      </div>
+      <!-- END PAGE CONTENT WRAPPER -->
+    </div>
+    <!-- END PAGE CONTAINER -->
+
+    <!-- END OVERLAY -->
+    <script src="./assets/js/user.js"></script>
+    <script src="./assets/js/profile.js"></script>
+    <!-- BEGIN VENDOR JS -->
+    <script src="./components/scripts.js"></script>
+    <script src="pages/js/pages.social.min.js"></script>
+    <!-- END CORE TEMPLATE JS -->
+    <!-- BEGIN PAGE LEVEL JS -->
+    <script src="assets/js/scripts.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL JS -->
+  </body>
+</html>
