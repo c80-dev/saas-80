@@ -1,0 +1,50 @@
+.deleteButton {
+  border: none;
+  color: red;
+  background: none;
+}
+
+.signingMessage small {
+  display: block;
+  text-align: center;
+  color: green;
+  visibility: hidden;
+}
+
+#modalNotifcation {
+  display: none;
+}
+
+#tableWithSearch thead tr th {
+  text-align: center;
+}
+
+#tableWithSearch tbody tr td {
+  text-align: center;
+}
+
+.append p {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.trueCheckSpan {
+  color: green;
+  display: inline-block;
+  width: 90px;
+}
+
+.falseClearSpan {
+  color: red;
+  display: inline-block;
+  width: 90px;
+}
+
+#noRecordFound {
+  display: grid;
+  place-items: center;
+  color: red;
+  height: 50vh;
+  display: none;
+}

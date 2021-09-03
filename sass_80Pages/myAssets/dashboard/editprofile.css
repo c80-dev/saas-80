@@ -1,0 +1,26 @@
+.page-content-wrapper .content {
+  padding-left: 0 !important;
+}
+
+.displayBackendErrorMsg.error small {
+  /* visibility: visible; */
+  display: block;
+  color: #e74c3c;
+}
+.signingMessage small {
+  display: block;
+  text-align: center;
+  color: green;
+  display: none;
+  /* visibility: hidden; */
+}
+
+#successfulRequest {
+  display: block;
+  text-align: center;
+  color: green;
+  text-transform: capitalize;
+}
+#modalNotifcation {
+  display: none;
+}

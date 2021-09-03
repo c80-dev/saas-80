@@ -1,0 +1,10 @@
+.displayBackendErrorMsg.error small {
+  visibility: visible;
+  color: #e74c3c;
+}
+.signingMessage small {
+  display: block;
+  text-align: center;
+  color: green;
+  visibility: hidden;
+}
