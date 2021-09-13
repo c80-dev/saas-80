@@ -1,15 +1,3 @@
-// a function that protect pages
-function authenticateUser() {
-  let token = sessionStorage.getItem("token");
-  if (!token) {
-    window.location.replace("./login.html");
-  }
-}
-//a fuction that calls the authentictaed users function
-window.onload = function () {
-  authenticateUser();
-};
-
 //function that return getElement by ID
 function _(x) {
   return document.getElementById(x);
@@ -29,6 +17,32 @@ const modalNotifcation = _("modalNotifcation");
 const selfClickedButton = _("selfClickedButton");
 const closeNotificationDiv = _("closeNotificationDiv");
 const selfClickedButton2 = _("selfClickedButton2");
+
+// function that fetches a logged in user profile
+try {
+  const getLoggedUsers = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const request = await fetch(`${baseUrl}/user-profile`, config);
+    if (request.status === 401) {
+      return window.location.replace("../../login.html");
+    }
+    const response = await request.json();
+    const profileData = response.data;
+    console.log(profileData);
+    let userProfile = JSON.stringify(profileData);
+    sessionStorage.setItem("userProfile", userProfile);
+  };
+  getLoggedUsers();
+} catch (error) {
+  console.log(error);
+}
+
+const userProfileData = JSON.parse(sessionStorage.getItem("userProfile"));
 
 //function to fetch subscribers
 const getUsers = async () => {
@@ -150,6 +164,7 @@ getUsers();
 
 // This function grab the subscriber's id when a user clicked the change button
 const setId = (getSubscriberId) => {
+  console.log(getSubscriberId);
   subsriberIdValue = getSubscriberId;
   console.log(subsriberIdValue);
 };
@@ -179,6 +194,7 @@ const logoutUser = async () => {
 // trigger form submission to change plan
 modalForm.addEventListener("click", async () => {
   let selectedPlan = changePackagesDiv.value;
+  console.log(selectedPlan);
 
   // inserting signing message
   const signingMessage = _("signingMessage");

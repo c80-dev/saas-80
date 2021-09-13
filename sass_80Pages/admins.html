@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8" />
+    <title>Pages - Admin Dashboard UI Kit - Blank Page</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"
+    />
+
+    <!-- Head starts here -->
+    <script src="/components/head.js"></script>
+    <!-- Head end here -->
+
+    <!-- My Customize CSS -->
+    <link rel="stylesheet" href="./myAssets/dashboard/subscribeUsers.css" />
+    <!-- My Customize CSS Ends here -->
+  </head>
+
+  <body class="fixed-header menu-pin menu-behind">
+    <!-- BEGIN SIDEBPANEL-->
+
+    <!-- Navbar starts here -->
+    <script src="/components/sidebar.js"></script>
+    <!-- Navbar starts end here -->
+
+    <!-- END SIDEBAR -->
+    <!-- END SIDEBPANEL-->
+    <!-- START PAGE-CONTAINER -->
+    <div class="page-container">
+      <!-- START HEADER -->
+      <script src="/components/header.js"></script>
+      <!-- END HEADER -->
+      <!-- START PAGE CONTENT WRAPPER -->
+      <div class="page-content-wrapper">
+        <!-- START PAGE CONTENT -->
+        <div class="content">
+          <!-- MODAL STICK UP  -->
+          <div
+            class="modal fade stick-up"
+            id="addNewAppModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="addNewAppModal"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header clearfix">
+                  <button
+                    aria-label=""
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-hidden="true"
+                  >
+                    <i class="pg-icon">close</i>
+                  </button>
+                  <h4 class="p-b-5"><span class="semi-bold">New</span> App</h4>
+                </div>
+
+                <div class="modal-footer">
+                  <button
+                    aria-label=""
+                    id="add-app"
+                    type="button"
+                    class="btn btn-primary btn-cons"
+                  >
+                    Add
+                  </button>
+                  <button
+                    aria-label=""
+                    type="button"
+                    class="btn btn-cons"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <!-- START JUMBOTRON -->
+          <div class="jumbotron" data-pages="parallax">
+            <div class="container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0">
+              <div class="inner">
+                <!-- START BREADCRUMB -->
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active">Admins</li>
+                </ol>
+                <!-- END BREADCRUMB -->
+              </div>
+            </div>
+          </div>
+          <!-- END JUMBOTRON -->
+          <!-- START CONTAINER FLUID -->
+          <div class="container-fluid container-fixed-lg bg-white">
+            <div class="card-body">
+              <!-- A messages that shows when a user click the save buttton -->
+              <div
+                class="alert alert-success"
+                id="modalNotifcation"
+                role="alert"
+              >
+                <button
+                  aria-label=""
+                  class="close"
+                  data-dismiss="alert"
+                  id="closeNotificationDiv"
+                ></button>
+                <strong id="successAlertDiv"> </strong>
+              </div>
+              <!-- Ends Here -->
+
+              <!-- START card -->
+              <div class="card card-transparent">
+                <div class="card-header">
+                  <div class="card-title">Pages Default Tables Style</div>
+                  <div class="pull-right">
+                    <div class="col-xs-12">
+                      <input
+                        type="text"
+                        id="search-table"
+                        class="form-control pull-right"
+                        placeholder="Search"
+                      />
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <!-- Table starts here -->
+                <div class="card-body" id="table-container"></div>
+                <!-- Table E here -->
+
+                <!-- Pacakges Modal starts here -->
+                <div
+                  class="modal fade"
+                  id="exampleModalCenter"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="exampleModalCenterTitle"
+                  aria-hidden="true"
+                >
+                  <div
+                    class="modal-dialog modal-dialog-centered"
+                    role="document"
+                  >
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                          Packages
+                        </h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                          id="selfClickedButton"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div
+                        class="modal-body signingMessage"
+                        id="signingMessage"
+                      >
+                        <!-- Drop down starts here -->
+                        <select id="changePackagesDiv"></select>
+                        <small></small>
+                        <!-- Drop down starts here -->
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          id="modalForm"
+                        >
+                          Save changes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Pacakges Modal ends here -->
+
+                <!-- Deactivation Model starts here -->
+                <div
+                  class="modal fade"
+                  id="deactivateModalCenter"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="deactivateModalCenterTitle"
+                  aria-hidden="true"
+                >
+                  <div
+                    class="modal-dialog modal-dialog-centered"
+                    role="document"
+                  >
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5
+                          class="modal-title"
+                          id="deactivateModalCenterTitle"
+                        ></h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                          id="selfClickedButton2"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div
+                        class="modal-body signingMessage"
+                        id="deactivateModalMessage"
+                      >
+                        <!-- Drop down starts here -->
+                        <small id="deactivateModalMessage2"></small>
+
+                        <!-- Drop down starts here -->
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-dismiss="modal"
+                          id="noDeactivate"
+                          onclick="cancelDeactivateUser()"
+                        >
+                          No
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          id="yesDeactivate"
+                          onclick="runDeactivateUser()"
+                        >
+                          Yes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END card -->
+          </div>
+
+          <!-- END CONTAINER FLUID -->
+          <!-- START CONTAINER FLUID -->
+          <div class="container-fluid container-fixed-lg bg-white"></div>
+          <!-- END CONTAINER FLUID -->
+        </div>
+        <!-- END PAGE CONTENT -->
+
+        <!-- Footer starts here -->
+        <script src="/components/footer.js"></script>
+        <!-- Footer end here -->
+        <!-- END COPYRIGHT -->
+      </div>
+      <!-- END PAGE CONTENT WRAPPER -->
+    </div>
+    <!-- END PAGE CONTAINER -->
+
+    <!-- BEGIN VENDOR JS -->
+    <script src="/components/script.js"></script>
+    <!-- My customize JS -->
+    <script src="./myAssets/dashboard/admin.js"></script>
+    <!-- <script src="./myAssets/dashboard/subscribeUsers.js"></script> -->
+  </body>
+</html>
+
+<!-- 
+   <button aria-label="" class="btn btn-primary" id="editSubscriberButton">
+                                  Edit Profile
+                                </button> -->

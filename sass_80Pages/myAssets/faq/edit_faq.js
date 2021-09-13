@@ -6,11 +6,21 @@ function _(x) {
 const baseUrl = "https://saas80-laravel.herokuapp.com/api/v0.01";
 const token = sessionStorage.getItem("token");
 
-const createFaqForm = _("createFaqForm");
-const changeCategoriesDiv = _("changeCategoriesDiv");
-const tableContainer = _("table-container");
-let categoryIdValue;
+// the code is use to extract data from a query params
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
 
+const editFaqForm = _("editFaqForm");
+const tableContainer = _("table-container");
+const changeCategoriesDiv = _("changeCategoriesDiv");
+
+// This is for the modal (packages)
+const successAlertDiv = _("successAlertDiv");
+const modalNotifcation = _("modalNotifcation");
+const closeNotificationDiv = _("closeNotificationDiv");
+const signingMessage = _("signingMessage");
+
+//function to fetch all categories
 const getCategories = async () => {
   const config = {
     headers: {
@@ -21,31 +31,30 @@ const getCategories = async () => {
   try {
     //This Api fetches the list of all  categories
     const categoriesRequest = await fetch(`${baseUrl}/categories`, config);
-    const categoriesResponse = await categoriesRequest.json();
 
-    //redirect a user to the login page when the tokens expires
-    if (categoriesResponse.status === `Token is Expired`) {
-      return window.location.replace("../../login.html");
-    }
-
-    //create a table for the category Modal
-    const table = document.createElement("table");
-    table.classList.add("table");
-    table.id = "table-container";
-
-    // The table head is created below
-    table.innerHTML = `
-    <thead>
-    <th scope="col" class="numberColumn">#</th>
-    <th scope="col">FAQ CATEGORY NAME</th>
-    <th scope="col">ACTION</th>
-    </thead>
-`;
-    const tableBody = document.createElement("tbody");
-
-    //inject the list of categories as a drop down in the input field
+    // successful request
     if (categoriesRequest.status === 200) {
+      const categoriesResponse = await categoriesRequest.json();
+
+      // when the token has expired
+      if (categoriesResponse.status === `Token is Expired`) {
+        return window.location.replace("../../login.html");
+      }
+
       const categoriesData = categoriesResponse.data;
+      const table = document.createElement("table");
+      table.classList.add("table");
+      table.id = "table-container";
+
+      // The table head is created below
+      table.innerHTML = `
+      <thead>
+      <th scope="col" class="numberColumn">#</th>
+      <th scope="col">FAQ CATEGORY NAME</th>
+      <th scope="col">ACTION</th>
+      </thead>
+  `;
+      const tableBody = document.createElement("tbody");
       categoriesData.map((category, index) => {
         const option = document.createElement("option");
 
@@ -64,19 +73,47 @@ const getCategories = async () => {
         <td> <button type="button" class="btn btn-primary delCatButton" id="delCatButton" onclick="setId(${categoryId})">Remove</button></td> `;
         tableBody.appendChild(tr);
       });
-
       //   The table body is injected to the table and a
       table.appendChild(tableBody);
       tableContainer.appendChild(table);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+// getCategories();
 
-      const delCatButton = _("delCatButton");
+//function to fetch the selected FAQ Profile
+const titleField = _("title");
+const descriptionField = _("description");
+const getFaqProfile = async () => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    // This Api fetches the user profile
+    const request = await fetch(`${baseUrl}/faqs/${id}`, config);
+    if (request.status === 401) {
+      return window.location.replace("../../login.html");
+    }
+    if (request.status === 200) {
+      const response = await request.json();
+      const responseData = response.data;
+      titleField.value = responseData.title;
+      descriptionField.value = responseData.description;
+      await getCategories();
+      changeCategoriesDiv.value = responseData.category.id;
     }
   } catch (error) {
     console.log(error);
   }
 };
 
-getCategories();
+getFaqProfile();
 
 const modalNotifcation2 = _("modalNotifcation2");
 const customModalMessage = _("customModalMessage");
@@ -107,7 +144,6 @@ const setId = async (categoryId) => {
   if (request.status == 401) {
     return window.location.replace("../../login.html");
   }
-
   // when delete categories
   if (request.status == 400) {
     setTimeout(() => {
@@ -116,9 +152,10 @@ const setId = async (categoryId) => {
     }, 2000);
     hideLoadingMessage(small);
     modalNotifcation2.style.display = "block";
-    successAlertDiv2.innerText = "Fail to Delete";
+    successAlertDiv2.innerText = "Failed to Delete";
   }
 
+  console.log(request.status);
   //   when the request is successful
   if (request.status == 200) {
     setTimeout(() => {
@@ -129,13 +166,55 @@ const setId = async (categoryId) => {
     modalNotifcation2.style.display = "block";
     successAlertDiv2.innerText = "This Category Has Been Removed";
   }
-  console.log(request.status);
-  if (request.status == 400) {
-    hideLoadingMessage(small);
-    modalNotifcation2.style.display = "block";
-    successAlertDiv2.innerText = "Unable to  Removed Category";
+};
+
+// This fuctionality is use to update a single
+
+// This fuctionality is use to edit an FAQ
+// const editzFaqForm = _("editzFaqForm");
+const editFaqForm1 = async (e) => {
+  const small = signingMessage.querySelector("small");
+  small.style.display = `block`;
+  const titleFieldValue = titleField.value.trim();
+  const descriptionFieldValue = descriptionField.value.trim();
+
+  const changeCategoriesDivValue = changeCategoriesDiv.value;
+
+  const config = {
+    method: "patch",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      title: titleFieldValue,
+      category_id: changeCategoriesDivValue,
+      description: descriptionFieldValue,
+    }),
+  };
+
+  try {
+    const request = await fetch(`${baseUrl}/faqs/${id}`, config);
+    if (request.status == 200) {
+      setTimeout(() => {
+        return window.location.replace("../../faq.html");
+      }, 2000);
+      hideSigningMessage(small);
+      modalNotifcation.style.display = "block";
+      modalNotifcation.innerText = `FAQ has been Successfully Updated`;
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
+
+editFaqForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+});
+
+_("save-btn").addEventListener("click", function (e) {
+  editFaqForm1();
+});
 
 // This functionality is use to create new categories
 const addNewCategories = _("addNewCategories");
@@ -145,7 +224,7 @@ addNewCategories.addEventListener("click", async () => {
   small.innerText = `Creating...`;
   addLoadingMessage(small);
 
-  //   These code runs only when the input contains a value
+  // These code runs only when the input contains a value
   if (categoryNameField) {
     const config = {
       method: "post",
@@ -178,55 +257,7 @@ addNewCategories.addEventListener("click", async () => {
   }
 });
 
-const titleField = _("title");
-const descriptionField = _("description");
-
-const modalNotifcation = _("modalNotifcation");
-const successAlertDiv = _("successAlertDiv");
-const signingMessage = _("signingMessage");
-
-// This fuctionality is use to create new FAQ
-createFaqForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  $(function () {
-    $("#createFaqForm").validate();
-  });
-  const small = signingMessage.querySelector("small");
-  small.style.display = `block`;
-  const titleFieldValue = titleField.value.trim();
-  const descriptionFieldValue = descriptionField.value.trim();
-
-  const changeCategoriesDivValue = changeCategoriesDiv.value;
-
-  const config = {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      title: titleFieldValue,
-      category_id: changeCategoriesDivValue,
-      description: descriptionFieldValue,
-    }),
-  };
-
-  try {
-    const request = await fetch(`${baseUrl}/faqs`, config);
-    if (request.status == 200) {
-      setTimeout(() => {
-        return window.location.replace("../../faq.html");
-      }, 2000);
-      hideSigningMessage(small);
-      modalNotifcation.style.display = "block";
-      modalNotifcation.innerText = `Plan has been Successfully Created`;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-//logout function
+//logout functionality
 const logoutUser = async () => {
   const config = {
     method: "post",

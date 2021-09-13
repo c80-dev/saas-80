@@ -14,7 +14,7 @@
     <!-- Head end here -->
 
     <!-- My Customize CSS -->
-    <link rel="stylesheet" href="./myAssets/faq/create_faq.css" />
+    <link rel="stylesheet" href="./myAssets/faq/edit_faq.css" />
   </head>
   <body class="fixed-header menu-pin menu-behind">
     <!-- Navbar starts here -->
@@ -64,11 +64,11 @@
                     </div>
 
                     <div class="signingMessage" id="signingMessage">
-                      <small>Creating FAQ...</small>
+                      <small>Updating FAQ...</small>
                     </div>
                     <div id="successfulRequest"></div>
-
-                    <form role="form" id="createFaqForm">
+                    <!-- test starts here -->
+                    <form role="form" id="editFaqForm">
                       <div class="form-group">
                         <div class="labelDiv">
                           <label for="categories"> Add FAQ Category </label>
@@ -105,8 +105,10 @@
                           rows="3"
                         ></textarea>
                       </div>
+
                       <div class="col-xl-12 mt-4">
                         <button
+                          id="save-btn"
                           aria-label=""
                           class="btn btn-primary pull-right btn-lg btn-block"
                         >
@@ -136,6 +138,7 @@
                             role="alert"
                           >
                             <button
+                              style="display: none"
                               aria-label=""
                               class="close"
                               data-dismiss="alert"
@@ -215,9 +218,8 @@
       <!-- END PAGE CONTENT WRAPPER -->
     </div>
     <!-- END PAGE CONTAINER -->
-    <!-- BEGIN VENDOR JS -->
     <script src="/components/script.js"></script>
     <!-- My customize JS -->
-    <script src="./myAssets/faq/create_faq.js"></script>
+    <script src="./myAssets/faq/edit_faq.js"></script>
   </body>
 </html>

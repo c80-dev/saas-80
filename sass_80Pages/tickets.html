@@ -14,7 +14,7 @@
     <!-- Head end here -->
 
     <!-- My Customize CSS -->
-    <link rel="stylesheet" href="./myAssets/packages/packages.css" />
+    <link rel="stylesheet" href="./myAssets/tickets/tickets.css" />
 
     <!-- My Customize CSS Ends here -->
   </head>
@@ -154,10 +154,7 @@
           </div>
           <!-- END JUMBOTRON -->
           <!-- START CONTAINER FLUID -->
-          <div
-            class="container-fluid container-fixed-lg bg-white"
-            style="margin-bottom: 30px"
-          >
+          <div class="container-fluid container-fixed-lg bg-white">
             <!-- START card -->
             <div class="card card-transparent">
               <div class="card-header">
@@ -191,77 +188,68 @@
                   ></button>
                   <strong id="successAlertDiv"> </strong>
                 </div>
+              </div>
+              <!-- Table End here -->
 
-                <!-- Table End here -->
-
-                <!-- Delete Plan Modal starts here -->
-                <div
-                  class="modal fade"
-                  id="deleteModalCenter"
-                  tabindex="-1"
-                  role="dialog"
-                  aria-labelledby="deleteModalCenterTitle"
-                  aria-hidden="true"
-                >
-                  <div
-                    class="modal-dialog modal-dialog-centered"
-                    role="document"
-                  >
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5
-                          class="modal-title"
-                          id="deleteModalCenterTitle"
-                        ></h5>
-                        <button
-                          type="button"
-                          class="close"
-                          data-dismiss="modal"
-                          aria-label="Close"
-                          id="selfClickedButton"
-                        >
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div
-                        class="modal-body signingMessage"
-                        id="deleteModalMessage"
+              <!-- Delete FAQ Modal starts here -->
+              <div
+                class="modal fade"
+                id="deleteModalCenter"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="deleteModalCenterTitle"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="deleteModalCenterTitle"></h5>
+                      <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                        id="selfClickedButton"
                       >
-                        <!-- Drop down starts here -->
-                        <small></small>
-
-                        <!-- Drop down starts here -->
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          type="button"
-                          class="btn btn-secondary"
-                          data-dismiss="modal"
-                          id="noDeletePlan"
-                          onclick="cancelDeleteUser()"
-                        >
-                          No
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          id="yesDeletePlan"
-                          onclick="runDeleteUser()"
-                        >
-                          Yes
-                        </button>
-                      </div>
+                        <span aria-hidden="true">&times;</span>
+                      </button>
                     </div>
+                    <div
+                      class="modal-body signingMessage"
+                      id="deleteModalMessage"
+                    >
+                      <!-- Drop down starts here -->
+                      <small></small>
 
-                    <!-- Delete Modals Ends here -->
+                      <!-- Drop down starts here -->
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                        id="noDeletePlan"
+                      >
+                        No
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="yesDeletePlan"
+                        onclick="runDeleteFaq()"
+                      >
+                        Yes
+                      </button>
+                    </div>
                   </div>
-                  <!-- END card -->
+
+                  <!-- Delete Modals Ends here -->
                 </div>
+                <!-- END card -->
               </div>
             </div>
           </div>
         </div>
-
         <!-- START CONTAINER FLUID -->
         <!-- Footer starts here -->
         <script src="/components/footer.js"></script>
@@ -274,7 +262,7 @@
     <!-- BEGIN VENDOR JS -->
     <script src="/components/script.js"></script>
     <!-- My customize JS -->
-    <script src="./myAssets/packages/packages.js"></script>
+    <script src="./myAssets/tickets/ticket.js"></script>
     <!-- END PAGE LEVEL JS -->
   </body>
 </html>

@@ -1,15 +1,3 @@
-// a function that protect pages
-function authenticateUser() {
-  let token = sessionStorage.getItem("token");
-  if (!token) {
-    window.location.replace("./login.html");
-  }
-}
-//a fuction that calls the authentictaed users function
-window.onload = function () {
-  authenticateUser();
-};
-
 //function that return getElement by ID
 function _(x) {
   return document.getElementById(x);
@@ -23,6 +11,8 @@ const nameField = _("name");
 const descriptionField = _("description");
 const durationField = _("duration");
 const costField = _("cost");
+
+console.log(nameField);
 
 // trigger form submission for edit subscribers profiles
 createPackageForm.addEventListener("submit", async (e) => {

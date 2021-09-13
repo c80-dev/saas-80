@@ -1,16 +1,3 @@
-// this function checks if a user is authenticated
-function authenticateUser() {
-  let token = sessionStorage.getItem("token");
-  if (!token) {
-    window.location.replace("./login.html");
-  }
-}
-
-//a fuction that calls the authentictaed users function
-window.onload = function () {
-  authenticateUser();
-};
-
 //function that return getElement by ID
 function _(x) {
   return document.getElementById(x);
@@ -18,22 +5,59 @@ function _(x) {
 
 const baseUrl = "https://saas80-laravel.herokuapp.com/api/v0.01";
 const token = sessionStorage.getItem("token");
+
 const editProfileForm = _("editProfileForm");
 const nameField = _("name");
 const numberField = _("phoneNumber");
 const emailField = _("email");
+const facebookField = _("facebook");
+const twitterField = _("twitter");
+const linkedinField = _("linkedin");
 let changePackagesDiv = _("changePackagesDiv");
 const displayBackendErrorMsg = _("displayBackendErrorMsg");
 const modalForm = _("modalForm");
-selectInputValue = "";
-let userId = "";
-let subscriberId;
+const logoInput = _("logoInput");
+const imgContainer = _("imgContainer");
+const cancelButton = _("cancelButton");
+let logoLength;
 
 // This is for the modal (packages)
 const successAlertDiv = _("successAlertDiv");
 const modalNotifcation = _("modalNotifcation");
-const selfClickedButton = _("selfClickedButton");
 const closeNotificationDiv = _("closeNotificationDiv");
+const uploadCancelBtn = _("uploadCancelBtn");
+const selectImageBtn = _("selectImageBtn");
+
+// This functionality shows a preview of the photo
+logoInput.onchange = function (evt) {
+  var tgt = evt.target;
+  files = tgt.files;
+  // FileReader support
+  if (FileReader && files && files.length) {
+    var fr = new FileReader();
+    uploadCancelBtn.style.display = "block";
+    selectImageBtn.style.display = "none";
+    fr.onload = function () {
+      imgContainer.style.display = `block`;
+      imgContainer.src = fr.result;
+    };
+    fr.readAsDataURL(files[0]);
+  }
+};
+
+// removes a photo
+cancelButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  logoInput.value = "";
+  imgContainer.src = "";
+  imgContainer.style.display = `none`;
+  uploadCancelBtn.style.display = "none";
+  selectImageBtn.style.display = "block";
+});
+
+selectInputValue = "";
+let userId = "";
+let subscriberId;
 
 // the code is use to extract data from a query params
 const params = new URLSearchParams(window.location.search);
@@ -54,7 +78,7 @@ const getSubscribersProfile = async () => {
       return window.location.replace("../../login.html");
     }
     const response = await request.json();
-    subscriberId = response.data.id;
+    // subscriberId = response.data.id;
     userId = response.data.user.id;
 
     // when the tokens expires it routes a user to the login page
@@ -69,11 +93,14 @@ const getSubscribersProfile = async () => {
       nameField.value = responseName;
       numberField.value = responsePhoneNumber;
       emailField.value = responseEmail;
+      let responseFacebook = responseData.user.email;
+      let responseTwitter = responseData.user.email;
+      let responseLinkedin = responseData.user.email;
 
-      selectInputValue = responseData.plan.id;
+      facebookField.value = responseFacebook;
+      twitterField.value = responseTwitter;
+      linkedinField.value = responseLinkedin;
     }
-
-    changePackagesDiv.value = selectInputValue;
   } catch (error) {
     console.log(error);
   }
@@ -90,11 +117,14 @@ editProfileForm.addEventListener("submit", async (e) => {
   //get the input value of the form
   const nameFieldValue = nameField.value.trim();
   const numberFieldValue = numberField.value.trim();
+  const emailFieldValue = emailField.value.trim();
+  const facebookFieldValue = facebookField.value.trim();
+  const twitterFieldValue = twitterField.value.trim();
+  const linkedinFieldValue = linkedinField.value.trim();
 
   //inserting signing message
   const small = signingMessage.querySelector("small");
   small.style.display = "block";
-  // successfulRequest.style.display = "none";
 
   const config = {
     method: "patch",
@@ -105,16 +135,23 @@ editProfileForm.addEventListener("submit", async (e) => {
     body: JSON.stringify({
       name: nameFieldValue,
       phone: numberFieldValue,
+      email: emailFieldValue,
+      twitter: twitterFieldValue,
+      facebook: facebookFieldValue,
+      linkedin: linkedinFieldValue,
     }),
   };
 
   const request = await fetch(`${baseUrl}/update-profile/${userId}`, config);
   let response = await request.json();
-  if (response.status === 200) {
+  if (request.status === 200) {
+    setTimeout(() => {
+      closeNotificationDiv.click();
+      return window.location.replace("./subscribeUsers.html");
+    }, 2000);
     hideSigningMessage(small);
-    successfulRequest.style.display = "block";
-    successfulRequest.innerText = `Profile Successfully updated`;
-    return window.location.replace("./subscribeUsers.html");
+    modalNotifcation.style.display = "block";
+    modalNotifcation.innerText = `Profile Successfully updated`;
   }
 });
 
@@ -130,3 +167,53 @@ function hideSigningMessage(input) {
   input.style.display = "none";
   input.classList.remove("signingMessage");
 }
+
+//logout function
+const logoutUser = async () => {
+  const config = {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      token,
+    }),
+  };
+  try {
+    const request = await fetch(`${baseUrl}/logout`, config);
+    const response = await request.json();
+    sessionStorage.clear();
+    window.location.replace("./login.html");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const uploadButton = _("uploadButton");
+uploadButton.addEventListener("click", async (e) => {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append("image_path", files[0]);
+  const config = {
+    method: "patch",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  };
+  const request = await fetch(`${baseUrl}/profile-image/${userId}`, config);
+  const response = await request.json();
+  console.log(response);
+  console.log("yes");
+});
+// IMAGE UPLOAD
+
+// const config = {
+//   method: "post",
+//   headers: {
+//     Authorization: `Bearer ${token}`,
+//   },
+//   body: formData
+// };

@@ -1,15 +1,3 @@
-// a function that protect pages
-function authenticateUser() {
-  let token = sessionStorage.getItem("token");
-  if (!token) {
-    window.location.replace("./login.html");
-  }
-}
-//a fuction that calls the authentictaed users function
-window.onload = function () {
-  authenticateUser();
-};
-
 //function that return getElement by ID
 function _(x) {
   return document.getElementById(x);
@@ -75,13 +63,13 @@ const getPackages = async () => {
       const responseArray = response.data;
 
       responseArray.forEach((data) => {
+        const packageID = data.id;
         const name = data.name;
         const description = data.description;
         const duration = data.duration;
         const cost = data.cost;
         const subscribers = data.subscribers_count;
         let properties = data.properties;
-        console.log(properties);
 
         // Convert property keys to an array
         // Push to a global variable
@@ -98,7 +86,7 @@ const getPackages = async () => {
           </div>
         </td>
           <td class="v-align-middle semi-bold" class="viewSubcribers">
-            <p> <a href="subscriberProfile.html?id=${description}"> ${name}</a></p>
+            <p> <a href="package_subscribers.html?id=${packageID}"> ${name}</a></p>
           </td>
           <td class="v-align-middle">
           <p>${description}</p>
@@ -164,7 +152,7 @@ const cancelDeleteUser = async () => {
   selfClickedButton.click();
 };
 
-//This function runs when a user clicks the yes button to deactivate a user
+//This function runs when a user clicks the delete button to delete a plan
 const runDeleteUser = async () => {
   const deleteModalMessage = _("deleteModalMessage");
   deleteModalMessage.innerHTML = ` <small>Deleting Plan ...</small>`;
@@ -180,9 +168,8 @@ const runDeleteUser = async () => {
       Authorization: `Bearer ${token}`,
     },
   };
-  console.log(planIdValue);
+
   try {
-    console.log(planIdValue);
     const request = await fetch(`${baseUrl}/plans/${planIdValue}`, config);
 
     const response = await request.json();
@@ -193,10 +180,10 @@ const runDeleteUser = async () => {
       setTimeout(() => {
         window.location.reload();
       }, 1000);
-      selfClickedButton.click();
       hideSigningMessage(small);
       modalNotifcation.style.display = "block";
       successAlertDiv.innerText = "This Plan has been deleted";
+      selfClickedButton.click();
     }
   } catch (error) {
     console.log(error);
