@@ -1,24 +1,25 @@
-const select = (name) => {
+const selectTableElement = (name) => {
   return document.getElementById(name);
 };
 
-// API URL
-const url = "https://sass-80.herokuapp.com/analyse";
+// API table_url
+// const table_url = "http://localhost:5000/analyse";
+const table_url = "https://sass-80.herokuapp.com/analyse";
 
 let column;
 let id;
 
 const uploadFile = () => {
-  const file = select("file").files[0],
-    fileName = select("fileName"),
-    fileSize = select("fileSize");
+  const file = selectTableElement("file").files[0],
+    fileName = selectTableElement("fileName"),
+    fileSize = selectTableElement("fileSize");
 
   if (!file) {
     return;
   }
 
-  select("nxtBtn1").classList.remove("hidden");
-  select("fileUploadDiv").classList.remove("hidden");
+  selectTableElement("nxtBtn1").classList.remove("hidden");
+  selectTableElement("fileUploadDiv").classList.remove("hidden");
 
   fileName.innerText = file.name;
   fileSize.innerText = `${file.size / 1000} kb`;
@@ -26,8 +27,8 @@ const uploadFile = () => {
 
 // Process File Function
 const processFile = async () => {
-  const file = select("file").files[0];
-  const hasHeader = select("flexSwitchCheckDefault").checked;
+  const file = selectTableElement("file").files[0];
+  const hasHeader = selectTableElement("flexSwitchCheckDefault").checked;
 
   if (!file) {
     return;
@@ -37,7 +38,7 @@ const processFile = async () => {
   formData.append("file", file);
   formData.append("hasHeader", hasHeader);
 
-  const request = await fetch(url, {
+  const request = await fetch(table_url, {
     method: "POST",
     body: formData,
   });
@@ -50,16 +51,16 @@ const processFile = async () => {
   console.log(response);
 
   // Fetch table headers
-  const tableHeader = select("basicTableHeader");
-  const tableHeader2 = select("basicTableHeader2");
-  const tableHeader3 = select("basicTableHeader3");
+  const tableHeader = selectTableElement("basicTableHeader");
+  const tableHeader2 = selectTableElement("basicTableHeader2");
+  const tableHeader3 = selectTableElement("basicTableHeader3");
 
   // Fetch table body
-  const tableBody = select("basicHeaderBody");
+  const tableBody = selectTableElement("basicHeaderBody");
 
-  select(
+  selectTableElement(
     "card-title"
-  ).innerHTML = `SHOWING ROW 1 - 100 OF ${response.rowCount}`;
+  ).innerHTML = `SHOWING ROW 1 - ${response.rowCount} OF ${response.rowCount}`;
 
   response.cols.map((item) => {
     /* Get input items for first header row */
@@ -72,17 +73,17 @@ const processFile = async () => {
     /* Get input items for second header row */
 
     // Create options for default column type
-    const options = ["String", "Number", "Date"];
+    const options = ["Text", "Number", "Date"];
 
-    // Create select dropdowns for default column types
-    const selectDataType = document.createElement("select");
-    selectDataType.className = "defaultType";
-    selectDataType.innerHTML = options.map((item) => {
+    // Create selectTableElement dropdowns for default column types
+    const selectTableElementDataType = document.createElement("select");
+    selectTableElementDataType.className = "defaultType";
+    selectTableElementDataType.innerHTML = options.map((item) => {
       return `<option value=${item}>${item}</option>`;
     });
 
     const node2 = document.createElement("th");
-    node2.appendChild(selectDataType);
+    node2.appendChild(selectTableElementDataType);
 
     tableHeader2.appendChild(node2);
     /* ************ */
@@ -142,7 +143,7 @@ const saveEditedData = async () => {
     item.default = defaultValues[index];
   });
 
-  const request = await fetch(`${url}/${id}`, {
+  const request = await fetch(`${table_url}/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

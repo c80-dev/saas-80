@@ -5,7 +5,7 @@ const selectElement = (name) => {
 const url_string = "https://sass-80.herokuapp.com";
 // const url_string = "http://localhost:5000";
 
-const token = sessionStorage.getItem("token");
+const tickets_token = sessionStorage.getItem("token");
 
 const createTicket = async (event) => {
   event.preventDefault();
@@ -21,7 +21,7 @@ const createTicket = async (event) => {
   const request = await fetch(`${url_string}/tickets`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${tickets_token}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -59,7 +59,7 @@ try {
 const fetchTickets = async () => {
   const request = await fetch(`${url_string}/tickets`, {
     method: "GET",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${tickets_token}` },
   });
 
   const response = await request.json();
@@ -77,7 +77,6 @@ const fetchTickets = async () => {
   console.log(latestTicket, tickets);
 
   tickets.map((item) => {
-    console.log("hello");
     const innerHTML = `
     <div class="card card-default" data-pages="card">
                       <div class="card-header">
@@ -112,12 +111,78 @@ const fetchTickets = async () => {
                         <h3><span class="semi-bold">${item.title}</span></h3>
                         <p id="other-ticket-body">${item.body}
                         </p>
+
+                        <div>
+                            <div class="profile-img-wrapper m-t-5 inline">
+                              <img
+                                width="35"
+                                height="35"
+                                data-src-retina="assets/img/profiles/avatar_small2x.jpg"
+                                data-src="assets/img/profiles/avatar_small.jpg"
+                                alt=""
+                                src="assets/img/profiles/avatar_small2x.jpg"
+                              />
+                              <div class="chat-status available"></div>
+                            </div>
+                            <div class="inline m-l-10">
+                              <p class="small hint-text m-t-5">
+                                VIA senior product manager <br />for UI/UX at
+                                REVOX
+                              </p>
+                            </div>
+                          </div>
+
+                          <div id="replies"></div>
+
+                         ${
+                           item.replies.length > 1
+                             ? `<div id="reply-message">
+                            <input type="text" id="message" placeholder="Send a reply" />
+                            <button onclick="sendMessage(${item.ticketId})">Send Reply</button>
+                          </div>`
+                             : ""
+                         }
                       </div>
+                      
                     </div>
     `;
 
     selectElement("other-ticket").innerHTML += innerHTML;
+
+    item.replies.forEach((reply) => {
+      const p = `<p class="${reply.from}">${reply.message}</p>`;
+      selectElement("replies").innerHTML += p;
+    });
   });
+};
+
+const sendMessage = async (id) => {
+  const message = selectElement("message").value;
+
+  if (!message) return;
+  console.log(id);
+
+  const request = await fetch(`${url_string}/tickets/${id}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${tickets_token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      response: {
+        message,
+        from: "user",
+      },
+    }),
+  });
+
+  const response = await request.json();
+
+  if (request.status === 200) {
+    selectElement(
+      "replies"
+    ).innerHTML += `<p class="${response.response.from}">${response.response.message}</p>`;
+  }
 };
 
 fetchTickets();

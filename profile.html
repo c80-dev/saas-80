@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>Pages - Admin Dashboard UI Kit - Blank Page</title>
+    <title>Profile || Waarii</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"
@@ -11,7 +11,7 @@
     <script src="./components/head.js"></script>
   </head>
 
-  <body class="fixed-header no-header menu-pin menu-behind">
+  <body class="fixed-header no-header">
     <!--SIDEBPANEL-->
     <script src="./components/sidepanal.js"></script>
 
@@ -62,7 +62,16 @@
                       <!-- START CONTAINER FLUID -->
                       <div class="container-fluid p-t-30 p-b-30">
                         <div class="row">
-                          <div class="col-lg-4">
+                          <div class="col-lg-12">
+                            <div
+                              class="alert alert-danger hidden"
+                              id="image-error-message"
+                              role="alert"
+                            >
+                              <strong id="image-error-message-text"
+                                >Could not update profile image</strong
+                              >
+                            </div>
                             <div class="container-xs-height">
                               <div class="row-xs-height">
                                 <div
@@ -84,16 +93,16 @@
                                   >
                                     <img
                                       alt="Avatar"
+                                      id="profile-img"
                                       width="55"
                                       height="55"
-                                      data-src-retina="assets/img/profiles/avatar_small2x.jpg"
-                                      data-src="assets/img/profiles/avatar.jpg"
                                       src="assets/img/profiles/avatar.jpg"
                                     />
                                   </div>
                                   <br />
                                   <label>
                                     <i
+                                      id="upload-icon"
                                       class="pg-icon text-success m-t-10"
                                       style="cursor: pointer"
                                       >camera</i
@@ -151,7 +160,7 @@
                       role="alert"
                     >
                       <strong id="error-message-text"
-                        >Profile Updated Successfully</strong
+                        >Could not update Profile</strong
                       >
                     </div>
 
@@ -164,12 +173,7 @@
                           </div> -->
                           <div class="card-body">
                             <span id="error-message"></span>
-                            <form
-                              class=""
-                              onsubmit="editProfile()"
-                              id="profile-form"
-                              role="form"
-                            >
+                            <form class="" id="profile-form" role="form">
                               <div class="form-group form-group-default">
                                 <label>Full Name</label>
                                 <input
@@ -264,6 +268,7 @@
     <!-- END PAGE CONTAINER -->
 
     <!-- END OVERLAY -->
+    <script src="./assets/js/auth.js"></script>
     <script src="./assets/js/user.js"></script>
     <script src="./assets/js/profile.js"></script>
     <!-- BEGIN VENDOR JS -->

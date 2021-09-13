@@ -13,9 +13,9 @@ document.write(
     <div class="">
       <div class="brand inline m-l-10">
         <img
-          src="assets/img/logo.png"
+          src="assets/img/logo-text.svg"
           alt="logo"
-          data-src="assets/img/logo.png"
+          data-src="assets/img/logo-text.svg"
           data-src-retina="assets/img/logo_2x.png"
           width="78"
           height="22"

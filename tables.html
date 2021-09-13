@@ -17,7 +17,7 @@
     />
   </head>
 
-  <body class="fixed-header menu-pin menu-behind">
+  <body class="fixed-header">
     <!-- SIDEPANEL  -->
     <script src="./components/sidepanal.js"></script>
 
@@ -192,6 +192,7 @@
                               id="file"
                               onchange="uploadFile()"
                               style="display: none"
+                              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                             />
                           </label>
                         </div>
@@ -227,6 +228,7 @@
                             class="form-check-input"
                             type="checkbox"
                             id="flexSwitchCheckDefault"
+                            checked
                           />
                           <label
                             class="form-check-label"
@@ -283,7 +285,7 @@
                     <div class="card card-transparent">
                       <div class="card-header">
                         <div class="card-title" id="card-title">
-                          SELECT A FILE TO BE ANALYSED
+                          PROCESSING YOUR FILE...
                         </div>
                       </div>
 

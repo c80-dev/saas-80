@@ -22,3 +22,44 @@
   display: block;
   margin-bottom: 20px !important;
 }
+
+#replies {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#replies p {
+  background-color: grey;
+  padding: 10px;
+  color: #fff;
+  border-radius: 5px;
+  width: fit-content;
+  max-width: 65%;
+}
+
+#replies .user {
+  align-self: flex-end;
+  background-color: #008000;
+  padding: 10px;
+  color: #fff;
+  border-radius: 5px;
+  width: fit-content;
+  max-width: 65%;
+}
+
+#reply-message {
+  display: flex;
+}
+
+#reply-message input {
+  flex: 1;
+  padding: 10px;
+}
+
+#reply-message button {
+  background-color: #323237;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+}
