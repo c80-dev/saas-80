@@ -1,0 +1,1065 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "SAAS-80 api documentation",
+        "description": "SAAS-80 api documentation",
+        "contact": {
+            "email": "orutu1@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://saas80-laravel.herokuapp.com/api/",
+            "description": "Demo API Server"
+        }
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Login User"
+                ],
+                "description": "Users login method",
+                "operationId": "UsersLogin",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Users email address",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Users password",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "description": "Input data format",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "The email of the user",
+                                        "type": "string",
+                                        "example": "orutu1@gmail.com"
+                                    },
+                                    "password": {
+                                        "description": "The password of the user",
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Logout User"
+                ],
+                "summary": "Logout users",
+                "description": "Logout users from the system",
+                "operationId": "LogoutUsers",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Authenticate users token",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "description": "Input data format",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "token": {
+                                        "description": "User token",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User logged out successfully"
+                    },
+                    "500": {
+                        "description": "Failed to logout, please try again."
+                    }
+                }
+            }
+        },
+        "/refresh": {
+            "post": {
+                "tags": [
+                    "Refresh User Token"
+                ],
+                "summary": "Refresh Token",
+                "description": "Create new token for and returns the token",
+                "operationId": "refreshToken",
+                "responses": {
+                    "200": {
+                        "description": "New Token"
+                    }
+                }
+            }
+        },
+        "/user-profile": {
+            "get": {
+                "tags": [
+                    "View User Profile"
+                ],
+                "summary": "Get auth users profile",
+                "description": "Returns the authenticated users profile",
+                "operationId": "Authenticated Users Profile",
+                "responses": {
+                    "200": {
+                        "description": "User"
+                    }
+                }
+            }
+        },
+        "/create-account": {
+            "post": {
+                "tags": [
+                    "Create User Account"
+                ],
+                "summary": "Create User Account",
+                "description": "Create new users account",
+                "operationId": "CreateUser",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Users fullname",
+                        "required": true
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Users email address",
+                        "required": true
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Users phone number",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Users password",
+                        "required": true
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "in": "query",
+                        "description": "Users password confirmation"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Input data format",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "name",
+                                        "type": "string",
+                                        "example": "Orutu Akposieyefa Williams"
+                                    },
+                                    "email": {
+                                        "description": "email",
+                                        "type": "string",
+                                        "example": "orutu1@gmail.com"
+                                    },
+                                    "phone": {
+                                        "description": "user phone number",
+                                        "type": "string",
+                                        "example": "08100788859"
+                                    },
+                                    "password": {
+                                        "description": "user password",
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "user password cofirimation",
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Account created successfully"
+                    },
+                    "400": {
+                        "description": "Sorry unable to create accounnt"
+                    },
+                    "422": {
+                        "description": "Validation error occured"
+                    }
+                }
+            }
+        },
+        "/update-profile/{id}": {
+            "patch": {
+                "tags": [
+                    "Update User Account"
+                ],
+                "summary": "Update Users Account",
+                "description": "Update existing users account",
+                "operationId": "UpdateUser",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Users fullname"
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Users phone number"
+                    },
+                    {
+                        "name": "facebook",
+                        "in": "query",
+                        "description": "Enter users facebook url"
+                    },
+                    {
+                        "name": "twitter",
+                        "in": "query",
+                        "description": "Enter users twitter url"
+                    },
+                    {
+                        "name": "linkedin",
+                        "in": "query",
+                        "description": "Enter users linkedin url"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Input data format",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "name",
+                                        "type": "string",
+                                        "example": "Orutu Akposieyefa Williams"
+                                    },
+                                    "phone": {
+                                        "description": "user phone number",
+                                        "type": "string",
+                                        "example": "08100788859"
+                                    },
+                                    "facebook": {
+                                        "description": "user facebook detials",
+                                        "type": "string",
+                                        "example": "https://facebook.com/orutu-akposieyefa-williams"
+                                    },
+                                    "linkedin": {
+                                        "description": "user linkedin details",
+                                        "type": "string",
+                                        "example": "https://linkedin.com/orutu-akpos-w"
+                                    },
+                                    "twitter": {
+                                        "description": "user twitter details",
+                                        "type": "string",
+                                        "example": "https://twitter.com/@Orutu_AW"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Profile updated successfully"
+                    },
+                    "400": {
+                        "description": "Sorry unable to update profile"
+                    },
+                    "404": {
+                        "description": "Sorry this data do not exist"
+                    },
+                    "422": {
+                        "description": "Validation error occured"
+                    }
+                }
+            }
+        },
+        "/reset-password/{id}": {
+            "patch": {
+                "tags": [
+                    "Reset User Password"
+                ],
+                "summary": "Reset users password",
+                "description": "Reset users account password",
+                "operationId": "ResetPassword",
+                "parameters": [
+                    {
+                        "name": "old_password",
+                        "in": "query",
+                        "description": "Enter old password",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Enter new password for users account",
+                        "required": true
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "in": "query",
+                        "description": "Enter password confrimation for users account",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "description": "Input data format",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "old_password": {
+                                        "description": "enter old password",
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "password": {
+                                        "description": "new password",
+                                        "type": "string",
+                                        "example": "password12345"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "new password confirmation",
+                                        "type": "string",
+                                        "example": "password12345"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User password reset successful"
+                    },
+                    "400": {
+                        "description": "Sorry the password reset process failed"
+                    },
+                    "422": {
+                        "description": "Validation error occured"
+                    },
+                    "404": {
+                        "description": "Sorry this user do not exist"
+                    },
+                    "401": {
+                        "description": "Sorry new password can not be the old password!"
+                    },
+                    "402": {
+                        "description": "Sorry old password doesnt matched"
+                    }
+                }
+            }
+        },
+        "/profile-image/{id}": {
+            "patch": {
+                "tags": [
+                    "Add Users Profile Image"
+                ],
+                "summary": "Add new image",
+                "description": "Add image to users account",
+                "operationId": "AddImage",
+                "parameters": [
+                    {
+                        "name": "image_path",
+                        "in": "query",
+                        "description": "Enter image file",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Enter users id to add image",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "description": "Input data format",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "image_path": {
+                                        "description": "enter image path",
+                                        "type": "binary",
+                                        "example": "user image"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User profile image updated successfully"
+                    },
+                    "400": {
+                        "description": "Sorry unable to update user profile image"
+                    },
+                    "422": {
+                        "description": "Validation error occured"
+                    },
+                    "404": {
+                        "description": "Sorry this user do not exist"
+                    }
+                }
+            }
+        },
+        "/delete-user/{id}": {
+            "delete": {
+                "tags": [
+                    "Delete Users Account"
+                ],
+                "summary": "Delete user account",
+                "description": "Delete users account form the system",
+                "operationId": "Delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Enter users id to add image",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User deleted successfully"
+                    },
+                    "400": {
+                        "description": "Sorry unable to delete user"
+                    },
+                    "404": {
+                        "description": "Sorry this user do not exist"
+                    }
+                }
+            }
+        },
+        "/email-verification-notification": {
+            "post": {
+                "tags": [
+                    "User Forgot Password"
+                ],
+                "description": "User Forgot Password",
+                "operationId": "ForgotPassword",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "User token",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful"
+                    }
+                }
+            }
+        },
+        "/email/verify/{id}/{hash}": {
+            "get": {
+                "tags": [
+                    "User Forgot Password"
+                ],
+                "description": "User Forgot Password",
+                "operationId": "ForgotPassword",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "User token",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful"
+                    }
+                }
+            }
+        },
+        "/plans": {
+            "get": {
+                "tags": [
+                    "Show All Plans"
+                ],
+                "description": "Show all plans",
+                "operationId": "AllPlans",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Plan"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Sorry no plan found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Create Plan"
+                ],
+                "description": "Create new plan",
+                "operationId": "CreatePlan",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Enter plan name",
+                        "required": true
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Enter plan description",
+                        "required": true
+                    },
+                    {
+                        "name": "duration",
+                        "in": "query",
+                        "description": "Enter plan duration",
+                        "required": true
+                    },
+                    {
+                        "name": "cost",
+                        "in": "query",
+                        "description": "Enter plan cost",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "description": "Input data format",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "The name of the plan",
+                                        "type": "string",
+                                        "example": "starter"
+                                    },
+                                    "description": {
+                                        "description": "The plan description",
+                                        "type": "string",
+                                        "example": "this is a starter plan"
+                                    },
+                                    "duration": {
+                                        "description": "The duration of the plan",
+                                        "type": "string",
+                                        "example": "5"
+                                    },
+                                    "cost": {
+                                        "description": "The cost of the plan",
+                                        "type": "string",
+                                        "example": "5000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Plan created successfully"
+                    },
+                    "400": {
+                        "description": "Sorry unable to create plan"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/plans/{id}": {
+            "get": {
+                "tags": [
+                    "Show Plan"
+                ],
+                "description": "Show single plan",
+                "operationId": "ShowPlan",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Enter plan id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Plan"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Sorry this data do not exist"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Delete Plan"
+                ],
+                "summary": "Delete existing plan",
+                "description": "Deletes a plan and returns no content",
+                "operationId": "deletePlan",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Plan Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Sorry this plan do not exist"
+                    },
+                    "400": {
+                        "description": "Sorry unable to delete plan"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Update Plan"
+                ],
+                "description": "Update  plan",
+                "operationId": "UpdatePlan",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Enter plan name"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Enter plan description"
+                    },
+                    {
+                        "name": "duration",
+                        "in": "query",
+                        "description": "Enter plan duration"
+                    },
+                    {
+                        "name": "cost",
+                        "in": "query",
+                        "description": "Enter plan cost"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category updated successfully"
+                    },
+                    "400": {
+                        "description": "Sorry unable to update category"
+                    },
+                    "404": {
+                        "description": "Sorry this data do not exist"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/forgot-password": {
+            "post": {
+                "tags": [
+                    "User Forgot Password"
+                ],
+                "description": "User Forgot Password",
+                "operationId": "ForgotPassword",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Users email address",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "description": "Input data format",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "user email address",
+                                        "type": "string",
+                                        "example": "orutu1@gmail.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        },
+        "/reset-password": {
+            "post": {
+                "tags": [
+                    "User Reset Forgot Password"
+                ],
+                "description": "User Reset Forgot Password",
+                "operationId": "ResetPassword",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Token sent to users email",
+                        "required": true
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Users email address",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "New password",
+                        "required": true
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "in": "query",
+                        "description": "New password confirmation",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "description": "Input data format",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "token": {
+                                        "description": "Auth user token",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "user email address",
+                                        "type": "string",
+                                        "example": "orutu1@gmail.com"
+                                    },
+                                    "password": {
+                                        "description": "user new password",
+                                        "type": "string",
+                                        "example": "password1"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "user new password confirmation",
+                                        "type": "string",
+                                        "example": "password1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Plan": {
+                "title": "Plan",
+                "description": "Plan model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the category",
+                        "type": "string",
+                        "example": "Cars and Trucks"
+                    },
+                    "duration": {
+                        "title": "Duration",
+                        "description": "Enter duration of this plan",
+                        "type": "string",
+                        "example": "One Month"
+                    },
+                    "cost": {
+                        "title": "Cost",
+                        "description": "Enter the cost of this plan",
+                        "type": "string",
+                        "example": "1000"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Description of the category",
+                        "type": "string",
+                        "example": "This is for cars and truck description"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "slug": {
+                        "title": "Slug",
+                        "description": "Slug",
+                        "type": "string",
+                        "example": "cars-and-trucks"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Plan"
+                }
+            },
+            "Role": {
+                "title": "Role",
+                "description": "Role model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of role",
+                        "type": "string",
+                        "example": "User"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Role"
+                }
+            },
+            "Subscriber": {
+                "title": "Subscriber",
+                "description": "Subscriber model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "from": {
+                        "title": "From",
+                        "description": "Subscripton starts",
+                        "type": "string",
+                        "example": "2020-01-27"
+                    },
+                    "to": {
+                        "title": "To",
+                        "description": "Subscription end",
+                        "type": "string",
+                        "example": "2020-06-27"
+                    },
+                    "status": {
+                        "title": "Cost",
+                        "description": "Enter the cost of this plan",
+                        "type": "string",
+                        "example": "1000"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Subscriber"
+                }
+            },
+            "Transaction": {
+                "title": "Transaction",
+                "description": "Transaction model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "trans_ref": {
+                        "title": "Transactoin ref",
+                        "description": "Payment transaction reference",
+                        "type": "string",
+                        "example": "128439"
+                    },
+                    "type": {
+                        "title": "Transaction Type",
+                        "description": "Transaction type",
+                        "type": "string",
+                        "example": "Unit"
+                    },
+                    "paid": {
+                        "title": "Payment status",
+                        "description": "User payment status",
+                        "type": "string",
+                        "example": "paid"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Transaction"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "SAAS-80",
+            "description": "API Endpoints of SAAS-80"
+        }
+    ],
+    "security": [
+        []
+    ]
+}
