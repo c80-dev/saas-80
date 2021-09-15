@@ -93,20 +93,6 @@ class SubscriberAction
         }
     }
 
-    // // //activate subscription
-    // public function activateSubscription($id)
-    // {
-    //     $activeSub = $this->model->where('user_id', '=', $id)->whereDate('created_at' , '=', Carbon::today())->first();
-    //     $update =  $activeSub->update([
-    //         'status' => true
-    //     ]);
-    //     if ($update) {
-    //         return true;
-    //     }else {
-    //         return false;
-    //     }
-    // }
-
     //deactivate subscription
     public function deActivateSubscription($id)
     {

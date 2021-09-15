@@ -20,35 +20,30 @@ class FAQController extends Controller
     //index
     public function index()
     {
-        $faqs = $this->faqRepository->allFAQs();
-        return $faqs;
+        return $this->faqRepository->allFAQs();
     }
 
     //store
     public function store(Request $request)
     {
-        $faq = $this->faqRepository->createFAQ($request);
-        return $faq;
+        return $this->faqRepository->createFAQ($request);
     }
 
     //show
     public function show($id)
     {
-        $faq = $this->faqRepository->showFAQ($id);
-        return $faq;
+        return $this->faqRepository->showFAQ($id);
     }
 
     //updated
     public function update(Request $request, $id)
     {
-        $faq = $this->faqRepository->updateFAQ($request, $id);
-        return $faq;
+        return $this->faqRepository->updateFAQ($request, $id);
     }
 
     //delete
     public function destroy($id)
     {
-        $faq = $this->faqRepository->deleteFAQ($id);
-        return $faq;
+        return $this->faqRepository->deleteFAQ($id);
     }
 }

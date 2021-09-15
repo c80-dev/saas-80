@@ -12,7 +12,7 @@ interface UserRepositoryInterface
 
     public function createUser($request);
 
-    public function updateUserAcount($request, $id);
+    public function updateUserAccount($request, $id);
 
     public function changePassword($request, $id);
 

@@ -17,7 +17,8 @@ class FAQ extends Model
         'title', 'description', 'category_id'
     ];
 
-    public function category() {
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Category::class, 'category_id');
     }
 

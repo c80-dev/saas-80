@@ -13,12 +13,14 @@ class Subscriber extends Model
     protected $fillable = [
         'user_id', 'plan_id', 'from', 'to', 'status'
     ];
-  
-    public function user() {
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function plan() {
+    public function plan(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Plan::class, 'plan_id');
     }
 

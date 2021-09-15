@@ -30,19 +30,22 @@ class User extends Authenticatable implements  MustVerifyEmail, JWTSubject
         return $this->getKey();
     }
 
-    public function getJWTCustomClaims() {
+    public function getJWTCustomClaims(): array
+    {
         return [];
     }
 
-    public function roles() {
+    public function roles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
         return $this->belongsToMany(Role::class);
     }
 
-    public function subscribers() {
+    public function subscribers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(Subscriber::class);
     }
 
-    public function logs()
+    public function logs(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Log::class);
     }

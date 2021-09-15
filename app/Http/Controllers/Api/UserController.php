@@ -20,22 +20,19 @@ class UserController extends Controller
     //all users
     public function index()
     {
-        $users = $this->userRepository->allUsers();
-        return $users;
+        return $this->userRepository->allUsers();
     }
 
      //all users
      public function adminIndex()
      {
-        $admins = $this->userRepository->allAdmin();
-        return $admins;
+         return $this->userRepository->allAdmin();
      }
 
-    //show user detils
+    //show user details
     public function show($id)
     {
-        $user = $this->userRepository->findUser($id);
-        return $user;
+        return $this->userRepository->findUser($id);
     }
 
      //create user account
@@ -45,9 +42,9 @@ class UserController extends Controller
      }
 
      //update user account
-     public function updateUserAcount(Request  $request, $id)
+     public function updateUserAccount(Request  $request, $id)
      {
-         return $this->userRepository->updateUserAcount($request, $id);
+         return $this->userRepository->updateUserAccount($request, $id);
      }
 
      //reset user password

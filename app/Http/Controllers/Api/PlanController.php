@@ -16,48 +16,41 @@ class PlanController extends Controller
         $this->middleware('auth:api',['except' => ['index','show']]);
         $this->middleware('superadmin', ['except' => ['index', 'show']]);
     }
-    
+
     //all plans
     public function index()
     {
-        $plans = $this->planRepository->allPlans();        ;
-        return $plans;
+        return $this->planRepository->allPlans();        ;
     }
 
     //create plan
     public function store(Request $request)
     {
-        $plan = $this->planRepository->createPlan($request);
-        return $plan;
+        return $this->planRepository->createPlan($request);
     }
 
     //show single plan
     public function show($id)
     {
-        $plan = $this->planRepository->showPlan($id);
-        return $plan;
+        return $this->planRepository->showPlan($id);
     }
 
     //show single plans details
     public function getSinglePlanSubscribers($id)
     {
-        $plan = $this->planRepository->getSinglePlanSubscribers($id);
-        return $plan;
+        return $this->planRepository->getSinglePlanSubscribers($id);
     }
-
 
     //update plan
     public function update(Request $request, $id)
     {
-        $plan = $this->planRepository->updatePlan($request, $id);
-        return $plan;
+        return $this->planRepository->updatePlan($request, $id);
     }
 
     //delete plan
     public function destroy($id)
     {
-        $plan = $this->planRepository->deletePlan($id);
-        return $plan;
+        return $this->planRepository->deletePlan($id);
     }
 
 }

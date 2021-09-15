@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class TicketController extends Controller
-{   
+{
 
     public $base_url;
 
@@ -22,10 +22,8 @@ class TicketController extends Controller
     //get all tickets
     public function allTickets()
     {
-
         $response = $this->base_url->request('GET', 'tickets');
-        $ticekts = json_decode($response->getBody());
-        return  $ticekts;
+        return json_decode($response->getBody());
     }
 
     //reply to tickets

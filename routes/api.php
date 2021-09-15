@@ -40,7 +40,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'v0.01'], function ($router) {
                 Route::post('/refresh', [App\Http\Controllers\Api\AuthController::class, 'refresh']);
                 Route::get('/user-profile', [App\Http\Controllers\Api\AuthController::class, 'userProfile']);
                 Route::patch('/change-password/{id}', [App\Http\Controllers\Api\UserController::class, 'changePassword']);
-                Route::patch('/update-profile/{id}', [App\Http\Controllers\Api\UserController::class, 'updateUserAcount']);
+                Route::patch('/update-profile/{id}', [App\Http\Controllers\Api\UserController::class, 'updateUserAccount']);
                 Route::patch('/profile-image/{id}', [App\Http\Controllers\Api\UserController::class, 'updateImage']);
 
 

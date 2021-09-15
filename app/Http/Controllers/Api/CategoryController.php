@@ -19,8 +19,7 @@ class CategoryController extends Controller
     // all categories
     public function index()
     {
-        $categories = $this->categoryRepository->allCategories();
-        return $categories;
+        return $this->categoryRepository->allCategories();
     }
 
     //create category
@@ -32,21 +31,18 @@ class CategoryController extends Controller
     //show single category
     public function show($id)
     {
-      $category = $this->categoryRepository->showCategory($id);
-      return $category;
+        return $this->categoryRepository->showCategory($id);
     }
 
     //update category
     public function update(Request $request, $id)
     {
-        $category = $this->categoryRepository->updateCategory($request, $id);
-        return $category;
+        return $this->categoryRepository->updateCategory($request, $id);
     }
 
     //delete category
     public function destroy($id)
     {
-        $category = $this->categoryRepository->deleteCategory($id);
-        return $category;
+        return $this->categoryRepository->deleteCategory($id);
     }
 }

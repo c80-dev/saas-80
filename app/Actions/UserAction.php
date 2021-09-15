@@ -67,7 +67,7 @@ class UserAction
             ], 200);
         }else {
            return response()->json([
-               'message' => 'Sorry unable to create accounnt'
+               'message' => 'Sorry unable to create account'
            ], 400);
         }
     }
@@ -133,9 +133,9 @@ class UserAction
            $update = $user->update([
              'name' => empty($request->name) ? $user->name : $request->name,
              'phone' =>   empty($request->phone) ? $user->phone : $request->phone,
-             'facebook' =>  empty($request->facebook) ? $user->facebook : $request->facebook,
-             'twitter' =>  empty($request->twitter) ? $user->twitter : $request->twitter,
-             'linkedin' =>  empty($request->linkedin) ? $user->linkedin : $request->linkedin
+             'facebook' =>  empty($request->facebook) ? $user->facebook : "https://www.facebook.com/".$request->facebook,
+             'twitter' =>  empty($request->twitter) ? $user->twitter : "https://twitter.com/". $request->twitter,
+             'linkedin' =>  empty($request->linkedin) ? $user->linkedin : "https://www.linkedin.com/". $request->linkedin
            ]);
            if ($update) {
              return response()->json([
@@ -167,7 +167,6 @@ class UserAction
                      if (!Hash::check($request->password , $hashedPassword)) {
 
                          try {
-
                              $user->update([
                                  'password' => empty($request->password) ? $user->password : bcrypt($request->password),
                              ]);
@@ -207,7 +206,7 @@ class UserAction
               $image_add = $user->update([
                    'image_path' =>  $this->cloudinary->image_helper($request, 'image_path')
               ]);
-              if ($image_id) {
+              if ($image_add) {
                   return response()->json([
                       'message' => 'User profile image updated successfully'
                   ], 200);

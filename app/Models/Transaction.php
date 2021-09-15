@@ -13,11 +13,13 @@ class Transaction extends Model
         'user_id', 'trans_ref', 'plan_id', 'paid'
     ];
 
-    public function users() {
+    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
         return $this->belongsToMany(User::class);
     }
 
-    public function plan() {
+    public function plan(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Plan::class);
     }
 

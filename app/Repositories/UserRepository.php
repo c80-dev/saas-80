@@ -52,11 +52,11 @@ class UserRepository implements UserRepositoryInterface
       }
 
       //update user account
-      public function updateUserAcount($request, $id)
+      public function updateUserAccount($request, $id)
       {
           $validator =  Validator::make($request->all(),[
-              'name' => 'required',
-              'phone' => 'sometimes',
+              'name' => 'sometimes',
+              'phone' => 'sometimes|max:11|min:11',
               'facebook' => 'sometimes',
               'twitter' => 'sometimes',
               'linkedin' => 'sometimes'
