@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/tickets', [App\Http\Controllers\Api\TicketController::class, 'allTickets']);
+Route::patch('/tickets/{id}', [App\Http\Controllers\Api\TicketController::class, 'replyTicket']);
+
 
 Route::group(['middleware' => 'api', 'prefix' => 'v0.01'], function ($router) {
 

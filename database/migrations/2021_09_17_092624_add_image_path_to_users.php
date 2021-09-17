@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCategoryIdToFaqs extends Migration
+class AddImagePathToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddCategoryIdToFaqs extends Migration
      */
     public function up()
     {
-        Schema::table('faqs', function (Blueprint $table) {
-            $table->foreignId('category_id')->constrained();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('image_path')->nullable()->after('slug');
         });
     }
 
@@ -25,8 +25,8 @@ class AddCategoryIdToFaqs extends Migration
      */
     public function down()
     {
-        Schema::table('faqs', function (Blueprint $table) {
-            Schema::dropIfExists('category_id')->onDelete('cascade');
+        Schema::table('users', function (Blueprint $table) {
+            Schema::dropIfExists('image_path');
         });
     }
 }

@@ -138,9 +138,10 @@ class UserAction
              'linkedin' =>  empty($request->linkedin) ? $user->linkedin : "https://www.linkedin.com/". $request->linkedin
            ]);
            if ($update) {
-             return response()->json([
-                 'message' => 'Profile updated successfully'
-             ], 200);
+                return response()->json([
+                    'message' => 'Profile updated successfully',
+                    'user' => $user
+                ], 200);
            }else {
               return response()->json([
                   'message' => 'Sorry unable to update profile'
