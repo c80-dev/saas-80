@@ -14,8 +14,8 @@ class TicketController extends Controller
 
     public function __construct()
     {
-        // $this->middleware('auth:api');
-        // $this->middleware('superadmin');
+        $this->middleware('auth:api');
+        $this->middleware('superadmin');
         $this->base_url = new Client(["base_uri" => "https://sass-80.herokuapp.com/"]);
     }
 
