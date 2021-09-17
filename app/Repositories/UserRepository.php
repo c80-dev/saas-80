@@ -19,7 +19,7 @@ class UserRepository implements UserRepositoryInterface
       public function createUser($request)
       {
           $validator =  Validator::make($request->all(),[
-              'name' => 'required|unique:users|regex:/^([^0-9]*)$/',
+              'name' => 'required|regex:/^([^0-9]*)$/',
               'email' => 'required|email|unique:users',
               'phone' => 'required|unique:users|max:11|min:11',
               'password' => 'required|confirmed'

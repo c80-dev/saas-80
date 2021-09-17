@@ -88,7 +88,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'v0.01'], function ($router) {
                     Route::patch('/plans/{id}', [App\Http\Controllers\Api\PlanController::class, 'update']);
                     Route::delete('/plans/{id}', [App\Http\Controllers\Api\PlanController::class, 'destroy']);
 
-                Route::patch('/delete-user/{id}', [App\Http\Controllers\Api\UserController::class, 'delete']);
+                Route::delete('/delete-user/{id}', [App\Http\Controllers\Api\UserController::class, 'delete']);
 
             });
 
