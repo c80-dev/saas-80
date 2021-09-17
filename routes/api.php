@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::get('/tickets', [App\Http\Controllers\Api\TicketController::class, 'allTickets']);
+Route::patch('/tickets/{id}', [App\Http\Controllers\Api\TicketController::class, 'replyTicket']);
 Route::group(['middleware' => 'api', 'prefix' => 'v0.01'], function ($router) {
 
        Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
@@ -70,8 +71,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'v0.01'], function ($router) {
                     Route::patch('/faqs/{id}', [App\Http\Controllers\Api\FAQController::class, 'update']);
                     Route::delete('/faqs/{id}', [App\Http\Controllers\Api\FAQController::class, 'destroy']);
 
-                Route::get('/tickets', [App\Http\Controllers\Api\TicketController::class, 'allTickets']);
-                    Route::patch('/tickets/{id}', [App\Http\Controllers\Api\TicketController::class, 'replyTicket']);
+                // Route::get('/tickets', [App\Http\Controllers\Api\TicketController::class, 'allTickets']);
+                //     Route::patch('/tickets/{id}', [App\Http\Controllers\Api\TicketController::class, 'replyTicket']);
 
                 Route::get('/users', [App\Http\Controllers\Api\UserController::class, 'index']);
                     Route::get('/users/{id}', [App\Http\Controllers\Api\UserController::class, 'show']);
