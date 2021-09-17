@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
-
 Route::group(['middleware' => 'api', 'prefix' => 'v0.01'], function ($router) {
 
        Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
