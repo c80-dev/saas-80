@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'api', 'prefix' => 'v0.01'], function ($router) {
 
-       Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
+       //Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
 
         Route::post('/forgot-password', [App\Http\Controllers\Api\ResetPasswordController::class, 'send'])->name('password.update');
             Route::post('/reset-password', [App\Http\Controllers\Api\ResetPasswordController::class, 'reset'])->name('password.update');
