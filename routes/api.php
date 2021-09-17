@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/tickets', [App\Http\Controllers\Api\TicketController::class, 'allTickets']);
 Route::patch('/tickets/{id}', [App\Http\Controllers\Api\TicketController::class, 'replyTicket']);
+
 Route::group(['middleware' => 'api', 'prefix' => 'v0.01'], function ($router) {
 
        Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
