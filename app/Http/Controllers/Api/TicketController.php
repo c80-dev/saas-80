@@ -22,7 +22,7 @@ class TicketController extends Controller
     //get all tickets
     public function allTickets()
     {
-        $response = $this->base_url->request('GET', 'tickets');
+        $response = $this->base_url->request('GET', 'tickets/admins');
         return json_decode($response->getBody());
     }
 
