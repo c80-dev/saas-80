@@ -23,7 +23,7 @@ class SubscriberResource extends JsonResource
             'from'   => $general_helper->clean($this->from),
             'to'     => $general_helper->clean($this->to),
             'status' => $this->status == true ? 'Active' : 'Inactive',
-            'user' => $general_helper->clean($this->whenLoaded('user')),
+            'user' => new UserResource($this->whenLoaded('user')),
             'login_logs' => $logs->logs($this->user_id),
             'plan'  => $general_helper->clean($this->whenLoaded('plan')),
             'days_remaining' => $this->to,
