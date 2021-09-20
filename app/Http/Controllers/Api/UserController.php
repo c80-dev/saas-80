@@ -59,10 +59,10 @@ class UserController extends Controller
         return $this->userRepository->updateImage($request, $id);
      }
 
-      //delete user account
-        public function delete($id)
-        {
-            return $this->userRepository->delete($id);
-        }
+    //delete user account
+    public function delete($id)
+    {
+        return $this->userRepository->deleteUser($id);
+    }
 
 }
