@@ -14,8 +14,8 @@ class TicketController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api');
-        $this->middleware('superadmin');
+        // $this->middleware('auth:api');
+        // $this->middleware('superadmin');
         $this->base_url = new Client(["base_uri" => "https://sass-80.herokuapp.com/"]);
     }
 
@@ -45,9 +45,13 @@ class TicketController extends Controller
             ], 422);
 
         }else {
+           
             $response = $this->base_url->request('PATCH', "tickets/$id",  [
                 'json' => [
-                    'response' => $request->response
+                    'response'  => [
+                        'message' => $request->response,
+                        'from' => 'Admin'
+                    ]
                 ]
             ]);
             if ($response->getStatusCode()== 200) {
