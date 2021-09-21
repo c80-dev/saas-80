@@ -29,7 +29,7 @@ class TicketController extends Controller
     //get single tickets
     public function getTickets($id)
     {
-        $response = $this->base_url->request('GET', "tickets/$id");
+        $response = $this->base_url->request('POST', "tickets/$id");
         return json_decode($response->getBody());
     }
 
