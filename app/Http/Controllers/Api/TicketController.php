@@ -47,10 +47,7 @@ class TicketController extends Controller
         }else {
             $response = $this->base_url->request('PATCH', "tickets/$id",  [
                 'json' => [
-                    'response' => [
-                        'message' => $request->response,
-                        'form' => 'Admin'
-                    ] 
+                    'response' => $request->response
                 ]
             ]);
             if ($response->getStatusCode()== 200) {
