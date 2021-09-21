@@ -26,6 +26,13 @@ class TicketController extends Controller
         return json_decode($response->getBody());
     }
 
+    //get single tickets
+    public function getTickets($id)
+    {
+        $response = $this->base_url->request('GET', "tickets/$id");
+        return json_decode($response->getBody());
+    }
+
     //reply to tickets
     public function replyTicket(Request $request, $id)
     {

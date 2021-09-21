@@ -71,6 +71,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'v0.01'], function ($router) {
                     Route::delete('/faqs/{id}', [App\Http\Controllers\Api\FAQController::class, 'destroy']);
 
                 Route::get('/tickets', [App\Http\Controllers\Api\TicketController::class, 'allTickets']);
+                    Route::get('/tickets/{id}', [App\Http\Controllers\Api\TicketController::class, 'getTickets']);
                     Route::patch('/tickets/{id}', [App\Http\Controllers\Api\TicketController::class, 'replyTicket']);
 
                 Route::get('/users', [App\Http\Controllers\Api\UserController::class, 'index']);
