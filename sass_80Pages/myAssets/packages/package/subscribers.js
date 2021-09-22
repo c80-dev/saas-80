@@ -66,6 +66,7 @@ const getPackagesSubscribers = async () => {
         `;
         const tableBody = document.createElement("tbody");
         const responseArray = response.data;
+        console.log(responseArray);
 
         responseArray.forEach((data) => {
           // const name = data.name;

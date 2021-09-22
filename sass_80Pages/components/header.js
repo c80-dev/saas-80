@@ -256,7 +256,12 @@ document.write(`
       role="menu"
     >
       <a href="#" class="dropdown-item"
-        ><span>Signed in as <br /><b>David Aunsberg</b></span></a
+        ><span>Signed in as <br /><b>  <script>
+        const getUserProfile = JSON.parse(
+          sessionStorage.getItem("userProfile")
+        );
+        document.write(getUserProfile.name);
+      </script></b></span></a
       >
       <div class="dropdown-divider"></div>
       <a href="profile.html" class="dropdown-item">Your Profile</a>

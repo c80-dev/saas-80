@@ -80,11 +80,13 @@ const getUsers = async () => {
     const tableBody = document.createElement("tbody");
 
     const responseArray = response.data;
+    console.log(responseArray);
     responseArray.forEach((data) => {
       const status = data.status;
       const subscribedUser = data.user;
-      const name = subscribedUser.name;
-      const email = subscribedUser.email;
+      console.log(data);
+      const name = subscribedUser ? subscribedUser.name : "No Subscribers";
+      const email = subscribedUser ? subscribedUser.email : "No Subscribers";
 
       const plan = data.plan;
       const package = plan.name;

@@ -9,6 +9,9 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"
     />
     <script src="./components/head.js"></script>
+    <!-- My Customize CSS -->
+    <link rel="stylesheet" href="./myAssets/profile/profile.css" />
+    <!-- My Customize CSS Ends here -->
   </head>
 
   <body class="fixed-header no-header">
@@ -143,7 +146,7 @@
                         <h3>Edit Profile</h3>
                       </div>
                     </div>
-
+                    <!-- success error message starts here -->
                     <div
                       class="alert alert-success hidden"
                       id="success-message"
@@ -153,7 +156,13 @@
                         >Profile Updated Successfully</strong
                       >
                     </div>
+                    <div class="signingMessage" id="signingMessage">
+                      <small>Updating Profile...</small>
+                    </div>
 
+                    <!-- success error message starts here -->
+
+                    <!-- Failed error message starts here -->
                     <div
                       class="alert alert-danger hidden"
                       id="error-message"
@@ -163,6 +172,7 @@
                         >Could not update Profile</strong
                       >
                     </div>
+                    <!-- Failed error message end here -->
 
                     <div class="row">
                       <div class="col-lg-12">
@@ -297,7 +307,7 @@
     <!-- BEGIN VENDOR JS -->
     <script src="/components/script.js"></script>
     <!-- My customize JS -->
-    <script src="./myAssets/tickets/ticket.js"></script>
+    <script src="./myAssets/profile/profile.js"></script>
     <!-- END PAGE LEVEL JS -->
   </body>
 </html>

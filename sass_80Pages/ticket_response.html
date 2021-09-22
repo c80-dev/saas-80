@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8" />
+    <title>Pages - Admin Dashboard UI Kit - Form Elements</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
+    
+  <!-- Head starts here -->
+  <script src="/components/head.js"></script>
+  <!-- Head end here -->
+
+    <!-- My Customize CSS -->
+    <link rel="stylesheet" href="./myAssets/tickets/response/response.css">
+  </head>
+  <body class="fixed-header menu-pin menu-behind">
+
+      <!-- Navbar starts here -->
+      <script src="/components/sidebar.js"></script>
+      <!-- Navbar starts end here -->
+
+    <!-- START PAGE-CONTAINER -->
+    <div class="page-container ">
+      <!-- START HEADER -->
+      <script src="/components/header.js"></script>
+      <!-- END HEADER -->
+      <!-- START PAGE CONTENT WRAPPER -->
+      <div class="page-content-wrapper ">
+        <!-- START PAGE CONTENT -->
+        <div class="content ">
+          <!-- START JUMBOTRON -->
+          <div class="jumbotron" data-pages="parallax">
+            <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+              <div class="inner">
+                <!-- START BREADCRUMB -->
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active">edit Packages</li>
+                </ol>
+                <!-- END BREADCRUMB -->
+              
+              </div>
+            </div>
+          </div>
+          <!-- END JUMBOTRON -->
+          <!-- START CONTAINER FLUID -->
+          <div class=" container-fluid   container-fixed-lg">
+            <div class="row">
+              <div class="col-lg-12">
+                <!-- START card -->
+                <div class="card card-default">
+                  <div class="card-header ">
+                    <div class="card-title">
+                      Option #two
+                      
+                    </div>
+                  </div>
+                  <div class="card-body">
+                        <!-- A messages that shows when a user click the save buttton -->
+                        <div class="alert alert-success" id="modalNotifcation" role="alert">
+                            <button aria-label="" class="close" data-dismiss="alert" id="closeNotificationDiv"></button>
+                            <strong id="successAlertDiv"> </strong>
+                          </div>
+
+                          <div class="signingMessage" id="signingMessage">
+                            <small>Updating Packages ...</small>
+                          </div>
+                          <div id="successfulRequest"></div>
+                 
+                    <form role="form" id="replyTicketForm">
+                      <div class="form-group">
+                        <label>Ticket ID</label>
+                        <input type="text" class="form-control" disabled id="ticketID">
+                      </div>
+                      <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" class="form-control" disabled id="title">
+                      </div>
+                      <div class="form-group">
+                        <label>Response</label>
+                        <textarea id="response" name="description" rows="7" cols="80">
+                            </textarea>
+                      </div>             
+                      <div class="col-xl-12 mt-4">
+                        <button aria-label="" class="btn btn-primary pull-right btn-lg btn-block">Response
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <!-- END card -->
+              </div>
+            </div>
+          </div>
+          
+        <!-- END PAGE CONTENT -->
+        <!-- START COPYRIGHT -->
+        <!-- START CONTAINER FLUID -->
+        <!-- START CONTAINER FLUID -->
+       <!-- Footer starts here -->
+       <script src="/components/footer.js"></script>
+       <!-- Footer end here -->
+        <!-- END COPYRIGHT -->
+      </div>
+      <!-- END PAGE CONTENT WRAPPER -->
+    </div>
+    <!-- END PAGE CONTAINER -->
+    <script src="/components/script.js"></script>
+      <!-- My customize JS -->
+      <script src="./myAssets/tickets/response/response.js"></script>
+  </body>
+</html>

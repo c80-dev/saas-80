@@ -58,10 +58,12 @@
                   <div class="card-body">
                         <!-- A messages that shows when a user click the save buttton -->
                         <div class="alert alert-success" id="modalNotifcation" role="alert">
-                            <button aria-label="" class="close" data-dismiss="alert" id="closeNotificationDiv"></button>
+                            <!-- <button aria-label="" class="close" data-dismiss="alert" id="closeNotificationDiv"></button> -->
                             <strong id="successAlertDiv"> </strong>
                           </div>
-
+                          <div class="signingMessage" id="signingMessage">
+                            <small></small>
+                          </div>
                         
                           <div id="successfulRequest"></div>
                           <div class="row">
@@ -111,7 +113,7 @@
                             <div class="w-50%"></div>
                             <div class="col"> 
                               <div class="card-title">
-                                <h3> Package Details</h3>
+                                <h3> Package Details</h3>                               
                               </div>
                               <form role="form" id="subscriberProfileForm">
                               <div class="form-group">
@@ -129,6 +131,10 @@
                               </form>
                               <div class="card-title">
                                 <button aria-label="" class="btn btn-primary" id="editChangePackageButton" data-toggle="modal" data-target="#exampleModalCenter">Change Package
+                                </button>
+                                <button aria-label="" class="btn btn-success" id="activateUsersButton" onclick="activateSubscibersUsers()">Activate User
+                                </button>
+                                <button aria-label="" class="btn btn-danger" id="deactivateUsersButton" onclick="deactivateSubscibersUsers()">Deactivate User
                                 </button>
                               </div> 
                             </div>                      

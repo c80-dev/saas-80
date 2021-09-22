@@ -78,7 +78,6 @@ const getSubscribersProfile = async () => {
       return window.location.replace("../../login.html");
     }
     const response = await request.json();
-    // subscriberId = response.data.id;
     userId = response.data.user.id;
 
     // when the tokens expires it routes a user to the login page
@@ -208,12 +207,3 @@ uploadButton.addEventListener("click", async (e) => {
   console.log(response);
   console.log("yes");
 });
-// IMAGE UPLOAD
-
-// const config = {
-//   method: "post",
-//   headers: {
-//     Authorization: `Bearer ${token}`,
-//   },
-//   body: formData
-// };

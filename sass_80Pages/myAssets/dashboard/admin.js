@@ -8,14 +8,7 @@ const token = sessionStorage.getItem("token");
 
 let adminId;
 
-// try {
-//   _("createPackageForm").addEventListener("submit", (e) => createAdmin(e));
-// } catch (error) {
-//   console.log(error);
-// }
-
 const createAdmin = async (e) => {
-  console.log("here");
   e.preventDefault();
 
   // Declare Variables
@@ -32,7 +25,17 @@ const createAdmin = async (e) => {
     return variable;
   });
 
-  if (!check) return console.log("Please fill in every field");
+  if (!check)
+    return (_("signingMessage").innerHTML = "Please fill in all input fields");
+
+  if (password !== password_confirmation) {
+    _("signingMessage").innerHTML = "Passwords do not match";
+    _("signingMessage").style.color = "red";
+    return;
+  }
+
+  _("signingMessage").innerHTML = "Creating Account...";
+  _("signingMessage").style.color = "green";
 
   const request = await fetch(`${baseUrl}/create-account`, {
     method: "POST",
@@ -50,14 +53,26 @@ const createAdmin = async (e) => {
   });
 
   const response = await request.json();
-
   console.log(response);
+  if (request.status !== 200) {
+    _("signingMessage").innerHTML = response.message;
+    _("signingMessage").style.color = "red";
+    return;
+  }
+
+  _("signingMessage").innerHTML = "";
+  setTimeout(() => {
+    return window.location.replace("../../admins.html");
+  }, 2000);
+
+  _("modalNotifcation").style.display = "block";
+  _("modalNotifcation").innerText = `New Admin has been Successfully Created`;
 };
 
 try {
   _("createAdminForm").addEventListener("submit", function (e) {
-    createAdmin(e)
-  })
+    createAdmin(e);
+  });
 } catch (error) {
   console.log(error);
 }
@@ -86,6 +101,7 @@ const getUsers = async () => {
         <th style="width: 10%" class="text-center">Edit </th>
         <th>Name</th>
         <th>Email</th>
+        <th>Role</th>
         <th style="width: 5%" class="text-center">Delete</th>
       </tr>
     </thead>
@@ -98,6 +114,9 @@ const getUsers = async () => {
       // const admin = data.user;
       const name = data.name;
       const email = data.email;
+
+      // using tenary operator
+      const roles = data.roles[0] ? data.roles[0].name : "Admin";
 
       const tr = document.createElement("tr");
       tr.innerHTML = `
@@ -115,7 +134,10 @@ const getUsers = async () => {
        ${email}
         </td>
         <td class="v-align-middle">
-        <button class="deactivateButton" id="deactivate" onclick="deactivate(5)" btn btn-primary" data-toggle="modal" data-target="#deactivateModalCenter"><span class="material-icons">
+      ${roles}
+         </td>
+        <td class="v-align-middle">
+        <button class="deactivateButton" id="deactivate" onclick="deactivate('${data.id}')" data-toggle="modal" data-target="#deactivateModalCenter"><span class="material-icons">
         block
         </span></button>
       </td>`;
@@ -133,7 +155,7 @@ const getUsers = async () => {
 getUsers();
 
 const deactivate = (id) => {
-  console.log(id);
+  adminId = id;
   const deactivateModalMessage = _("deactivateModalMessage");
   deactivateModalMessage.innerHTML = `Do You Want To Deactivate This User`;
 };
@@ -147,28 +169,49 @@ const runDeactivateUser = async () => {
   const small = deactivateModalMessage.querySelector("small");
   small.style.visibility = "visible";
   const config = {
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   };
   try {
-    const request = await fetch(
-      `${baseUrl}/delete-user/${subsriberIdValue}`,
-      config
-    );
+    const request = await fetch(`${baseUrl}/delete-user/${adminId}`, config);
 
     const response = await request.json();
     const responseArray = response.data;
     if (request.status == 200) {
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 2000);
       selfClickedButton2.click();
-      hideSigningMessage(small);
+      console.log(modalNotifcation);
+      console.log(successAlertDiv);
       modalNotifcation.style.display = "block";
-      successAlertDiv.innerText = "This subscriber has been deactivated";
+      successAlertDiv.innerText = "The User is Deactivated";
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//logout function
+const logoutUser = async () => {
+  const config = {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      token,
+    }),
+  };
+  try {
+    const request = await fetch(`${baseUrl}/logout`, config);
+    const response = await request.json();
+    sessionStorage.clear();
+    window.location.replace("./login.html");
   } catch (error) {
     console.log(error);
   }

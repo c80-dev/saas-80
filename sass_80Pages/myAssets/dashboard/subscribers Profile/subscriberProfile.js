@@ -17,8 +17,11 @@ const activityField = _("activity");
 const packageNameField = _("packageName");
 const packagePriceField = _("packagePrice");
 const packageDurationField = _("packageDuration");
+const activateUsersButton = _("activateUsersButton");
+const deactivateUsersButton = _("deactivateUsersButton");
 let selectInputValue;
 let subscriberId;
+let statusPackage;
 
 // the code is use to extract data from a query params
 const params = new URLSearchParams(window.location.search);
@@ -50,6 +53,8 @@ const getSubscribersProfile = async () => {
       let responsePackageName = responseData.plan.name;
       let responsePackagePrice = responseData.plan.cost;
       let responsepackageDuration = responseData.plan.duration;
+      let responsePackageStatus = responseData.status;
+      let responsePackageActivity = responseData.login_logs.created_at;
 
       nameField.value = responseName;
       numberField.value = responsePhoneNumber;
@@ -61,14 +66,95 @@ const getSubscribersProfile = async () => {
       packagePriceField.value = responsePackagePrice;
       packageDurationField.value = responsepackageDuration;
       selectInputValue = responseData.plan.id;
+      statusField.value = responsePackageStatus;
+      activityField.value = responsePackageActivity;
+      statusPackage = responsePackageStatus;
+
+      // This functionality is use to activate or deactivate a user
+      if (responsePackageStatus === "Inactive") {
+        activateUsersButton.style.display = "inline-block";
+        grabSubscriberId(subscriberId);
+      }
+      if (responsePackageStatus === "Active") {
+        deactivateUsersButton.style.display = "inline-block";
+        grabSubscriberId(subscriberId);
+      }
       getSubscribersPlan();
     }
   } catch (error) {
     console.log(error);
   }
 };
-
 getSubscribersProfile();
+
+function grabSubscriberId(id) {
+  console.log(id);
+}
+
+const signingMessage = _("signingMessage");
+// This functionality is use  to deactivate a user
+const deactivateSubscibersUsers = async function () {
+  //inserting signing message
+  const small = signingMessage.querySelector("small");
+  small.style.display = "block";
+  small.innerText = `Deactivating User...`;
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  // This Api fetches the user profile
+  const request = await fetch(
+    `${baseUrl}/deactivate-subscribers/${subscriberId}`,
+    config
+  );
+  if (request.status === 200) {
+    const response = await request.json();
+    setTimeout(() => {
+      // modalNotifcation.click();
+      return window.location.reload();
+    }, 2000);
+    hideSigningMessage(small);
+    modalNotifcation.style.display = "block";
+    modalNotifcation.innerText = `This Subscriber has been Deactivated`;
+  }
+};
+
+// This functionality is use  to activate a user
+const activateSubscibersUsers = async function () {
+  //inserting signing message
+  const small = signingMessage.querySelector("small");
+  small.style.display = "block";
+  small.innerText = `Activating User...`;
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  // This Api fetches the user profile
+  const request = await fetch(
+    `${baseUrl}/activate-subscribers/${subscriberId}`,
+    config
+  );
+  if (request.status === 200) {
+    const response = await request.json();
+    setTimeout(() => {
+      // modalNotifcation.click();
+      return window.location.reload();
+    }, 2000);
+    hideSigningMessage(small);
+    modalNotifcation.style.display = "block";
+    modalNotifcation.innerText = `This Subscriber has been Activated`;
+  }
+};
+
+//removes the loading message
+function hideSigningMessage(input) {
+  input.style.display = "none";
+  input.classList.remove("signingMessage");
+}
 
 // This functionality takes a user to the edit profile page
 const editSubscriberButton = _("editSubscriberButton");
@@ -111,8 +197,6 @@ function addValue() {
 const modalForm = _("modalForm");
 modalForm.addEventListener("click", async () => {
   let selectedPlan = changePackagesDiv.value;
-  console.log(selectedPlan);
-  console.log(subscriberId);
 
   // inserting signing message
   const signingMessage = _("signingMessage");
