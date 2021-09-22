@@ -56,10 +56,10 @@ class UserRepository implements UserRepositoryInterface
       {
           $validator =  Validator::make($request->all(),[
               'name' => 'sometimes',
-              'phone' => 'sometimes|max:11|min:11',
-              'facebook' => 'sometimes',
-              'twitter' => 'sometimes',
-              'linkedin' => 'sometimes'
+              'phone' => 'nullable|sometimes|unique:users|max:11|min:11',
+              'facebook' => 'nullable|sometimes|url',
+              'twitter' => 'nullable|sometimes|url',
+              'linkedin' => 'nullable|sometimes|url'
           ]);
 
           if ($validator->fails()) {

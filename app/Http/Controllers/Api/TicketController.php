@@ -57,7 +57,7 @@ class TicketController extends Controller
             if ($response->getStatusCode()== 200) {
                 return response()->json([
                     'message' => "Ticket responded to"
-                ], 422);
+                ], 200);
             }else {
                 return response()->json([
                     'message' => "Sorry there was an error"
