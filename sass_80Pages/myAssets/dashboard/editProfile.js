@@ -146,7 +146,7 @@ editProfileForm.addEventListener("submit", async (e) => {
   if (request.status === 200) {
     setTimeout(() => {
       closeNotificationDiv.click();
-      return window.location.replace("./subscribeUsers.html");
+      return window.location.replace("./index.html");
     }, 2000);
     hideSigningMessage(small);
     modalNotifcation.style.display = "block";

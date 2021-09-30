@@ -108,7 +108,7 @@ document.write(`
             <span class="icon-thumbnail"><i class="pg-icon">note</i></span>
             <ul class="sub-menu">
               <li class="open active">
-                <a href="subscribeUsers.html">Subscribed Users</a>
+                <a href="index.html">Subscribed Users</a>
                 <span class="icon-thumbnail"><i class="pg-icon">SU</i></span>
               </li>
             </ul>

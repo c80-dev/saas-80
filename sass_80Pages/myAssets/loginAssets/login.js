@@ -52,7 +52,7 @@ loginForm.addEventListener("submit", async (e) => {
 
     //save
     sessionStorage.setItem("token", token);
-    window.location.replace("../subscribeUsers.html");
+    window.location.replace("../index.html");
   }
 });
 
