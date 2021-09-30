@@ -3,7 +3,19 @@ function _(x) {
   return document.getElementById(x);
 }
 
-const baseUrl = "https://saas80-laravel.herokuapp.com/api/v0.01";
+// a function that protect pages
+function authenticateUser() {
+  let token = sessionStorage.getItem("token");
+  if (!token) {
+    window.location.replace("./login.html");
+  }
+}
+//a fuction that calls the authentictaed users function
+window.onload = function () {
+  authenticateUser();
+};
+
+const baseUrl = "http://192.168.1.134:8000/api/v0.01";
 const token = sessionStorage.getItem("token");
 const modalForm = _("modalForm");
 const changePackagesDiv = _("changePackagesDiv");
@@ -28,8 +40,10 @@ try {
       },
     };
     const request = await fetch(`${baseUrl}/user-profile`, config);
+
     if (request.status === 401) {
-      return window.location.replace("../../login.html");
+      console.log("working");
+      // return window.location.replace("../../login.html");
     }
     const response = await request.json();
     const profileData = response.data;

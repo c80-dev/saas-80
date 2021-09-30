@@ -14,7 +14,7 @@ window.onload = function () {
 function _(x) {
   return document.getElementById(x);
 }
-const baseUrl = "https://saas80-laravel.herokuapp.com/api/v0.01";
+const baseUrl = "http://192.168.1.134:8000/api/v0.01";
 const token = sessionStorage.getItem("token");
 const ticketsTable = _("ticketsTable");
 const tableContainer = _("table-container");

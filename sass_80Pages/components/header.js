@@ -231,7 +231,7 @@ document.write(`
 </div>
 <div class="d-flex align-items-center">
   <!-- START User Info-->
-  <div class="dropdown pull-right d-lg-block d-none">
+  <div class="dropdown pull-right d-lg-block d-none" >
     <button
       class="profile-dropdown-toggle"
       type="button"
@@ -242,7 +242,8 @@ document.write(`
     >
       <span class="thumbnail-wrapper d32 circular inline">
         <img
-          src="assets/img/profiles/avatar.jpg"
+        id="header-dp"
+          src= ""
           alt=""
           data-src="assets/img/profiles/avatar.jpg"
           data-src-retina="assets/img/profiles/avatar_small2x.jpg"
@@ -265,7 +266,7 @@ document.write(`
       >
       <div class="dropdown-divider"></div>
       <a href="profile.html" class="dropdown-item">Your Profile</a>
-      <a href="#" class="dropdown-item">Your Activity</a>
+      <a href="security.html" class="dropdown-item">Security</a>
       <a href="#" class="dropdown-item">Your Archive</a>
       <div class="dropdown-divider"></div>
       <a href="#" class="dropdown-item">Features</a>

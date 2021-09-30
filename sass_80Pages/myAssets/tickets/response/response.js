@@ -10,13 +10,14 @@ function authenticateUser() {
     window.location.replace("./login.html");
   }
 }
-const baseUrl = "https://saas80-laravel.herokuapp.com/api/v0.01";
+const baseUrl = "http://192.168.1.134:8000/api/v0.01";
 const token = sessionStorage.getItem("token");
 
 const replyTicketForm = _("replyTicketForm");
 const ticketID = _("ticketID");
-const response = _("response");
+const responseField = _("response");
 const title = _("title");
+const signingMessage = _("signingMessage");
 
 // This is for the modal (packages)
 const successAlertDiv = _("successAlertDiv");
@@ -43,7 +44,6 @@ const getTicketProfile = async () => {
     }
     if (request.status === 200) {
       const response = await request.json();
-      console.log(response);
       responseData = response.ticket;
       const ticketId = responseData.ticketId;
       const ticketTitle = responseData.title;
@@ -56,6 +56,35 @@ const getTicketProfile = async () => {
 };
 
 getTicketProfile();
+
+replyTicketForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const responseFieldValue = responseField.value.trim();
+  console.log(responseFieldValue);
+  //inserting signing message
+  const small = signingMessage.querySelector("small");
+  small.style.display = "block";
+  const config = {
+    method: "patch",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      response: responseFieldValue,
+    }),
+  };
+  const request = await fetch(`${baseUrl}/tickets/${id}`, config);
+  if (request.status == 200) {
+    setTimeout(() => {
+      modalNotifcation.click();
+      return window.location.replace("../../tickets.html");
+    }, 2000);
+    hideSigningMessage(small);
+    modalNotifcation.style.display = "block";
+    modalNotifcation.innerText = `Response is successful`;
+  }
+});
 
 //logout function
 const logoutUser = async () => {
@@ -78,3 +107,9 @@ const logoutUser = async () => {
     console.log(error);
   }
 };
+
+//removes updating profile message
+function hideSigningMessage(input) {
+  input.style.display = "none";
+  input.classList.remove("signingMessage");
+}

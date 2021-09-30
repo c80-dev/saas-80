@@ -85,7 +85,14 @@ document.write(`
     <script src="assets/js/scripts.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL JS -->
 
-
+    <script>
+    const getUserProfile2 = JSON.parse(
+      sessionStorage.getItem("userProfile")
+    );
+    const image_path =getUserProfile2.image_path
+    console.log(image_path, "yes");
+  document.getElementById("header-dp").src=image_path
+  </script>
 
 
 

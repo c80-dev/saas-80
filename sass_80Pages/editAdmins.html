@@ -90,34 +90,34 @@
                       </div>
                       <div class="form-group">
                         <label>Linkedin</label>
-                        <input type="text" class="form-control"  id="linkedin" value="" >
+                        <input type="text" class="form-control"  id="linkedin" value=""  placeholder="https://www.linkedin.com/test">
                       </div>
                   </div>
                   <div class="w-50%"></div>
                   <div class="col"> 
                     <div class="form-group">
                       <label>Facebook</label>
-                      <input type="text" class="form-control"  id="facebook" value="" >
+                      <input type="text" class="form-control"  id="facebook" value="" placeholder="https://www.facebook.com/test" >
                     </div>
                     <div class="form-group">
                       <label>Twitter</label>
-                      <input type="text" class="form-control"  id="twitter" value="" >
+                      <input type="text" class="form-control"  id="twitter" value=""  placeholder="https://www.twitter.com/test">
                     </div>
                     <div class="form-group">
                       <label>Logo</label><br>
                       <img id="imgContainer"/>
-                      <label>Select image:
-                      <input style="display: none;" type="file" id="logoInput">
+                      <div id="loadingImage"></div>
+                      <label id="selectImage">Select image:
+                      <input style="display: none;" type="file" id="logoInput" accept=".png, .jpeg,.gif">
                     </label>
                       <br>
-                      <div class="card-title">
+                      <div class="card-title hiddenButton" id="hiddenButton">
                         <button aria-label="" class="btn btn-primary uploadButton" id="uploadButton"> Upload 
                         </button>
                         <button aria-label="" class="btn btn-danger uploadButton" id="cancelButton">Remove
                         </button>
                       </div> 
                     </div>
-
                   </div>
                   <div class="col-xl-12 mt-4">
                     <button aria-label="" class="btn btn-primary pull-right btn-lg btn-block">Save

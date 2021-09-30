@@ -3,7 +3,9 @@ function _(x) {
   return document.getElementById(x);
 }
 
-const baseUrl = "https://saas80-laravel.herokuapp.com/api/v0.01";
+
+
+const baseUrl = "http://192.168.1.134:8000/api/v0.01";
 const token = sessionStorage.getItem("token");
 
 const editProfileForm = _("editProfileForm");
@@ -19,7 +21,9 @@ const modalForm = _("modalForm");
 const logoInput = _("logoInput");
 const imgContainer = _("imgContainer");
 const cancelButton = _("cancelButton");
+const hiddenButton = _("hiddenButton");
 let logoLength;
+let files;
 
 // This is for the modal (packages)
 const successAlertDiv = _("successAlertDiv");
@@ -31,7 +35,7 @@ logoInput.onchange = function (evt) {
   var tgt = evt.target;
   files = tgt.files;
   logoLength = files.length;
-  console.log(files);
+  // console.log(files);
   // FileReader support
   if (FileReader && files && files.length) {
     var fr = new FileReader();
@@ -41,6 +45,7 @@ logoInput.onchange = function (evt) {
       console.log(logoInput.value);
     };
     fr.readAsDataURL(files[0]);
+    hiddenButton.classList.remove("hiddenButton");
   }
 };
 
@@ -50,6 +55,7 @@ cancelButton.addEventListener("click", (e) => {
   logoInput.value = "";
   imgContainer.src = "";
   imgContainer.style.display = `none`;
+  hiddenButton.classList.add("hiddenButton");
 });
 
 selectInputValue = "";
@@ -75,8 +81,6 @@ const getAdminProfile = async () => {
       return window.location.replace("../../login.html");
     }
     const response = await request.json();
-    console.log(response);
-    // subscriberId = response.data.id;
     userId = response.data.id;
 
     // when the tokens expires it routes a user to the login page
@@ -85,6 +89,9 @@ const getAdminProfile = async () => {
     }
     if (request.status === 200) {
       const responseData = response.data;
+      imgContainer.src = responseData.image_path;
+      imgContainer.style.display = "block";
+      console.log(imgContainer);
       let responseName = responseData.name;
       let responsePhoneNumber = responseData.phone;
       let responseEmail = responseData.email;
@@ -108,9 +115,6 @@ getAdminProfile();
 // trigger form submission for edit subscribers profiles
 editProfileForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  $(function () {
-    $("#editProfileForm").validate();
-  });
 
   //get the input value of the form
   const nameFieldValue = nameField.value.trim();
@@ -125,7 +129,7 @@ editProfileForm.addEventListener("submit", async (e) => {
   small.style.display = "block";
 
   const config = {
-    method: "patch",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -140,16 +144,27 @@ editProfileForm.addEventListener("submit", async (e) => {
     }),
   };
 
-  const request = await fetch(`${baseUrl}/update-profile/${userId}`, config);
-  let response = await request.json();
-  if (request.status === 200) {
-    setTimeout(() => {
-      closeNotificationDiv.click();
-      return window.location.replace("./admins.html");
-    }, 2000);
-    hideSigningMessage(small);
-    modalNotifcation.style.display = "block";
-    modalNotifcation.innerText = `Profile Successfully updated`;
+  try {
+    const request = await fetch(`${baseUrl}/update-profile/${userId}`, config);
+
+    let response = await request.json();
+    console.log(request.status === 222);
+    {
+      small.innerText = `${response.message}`;
+      small.style.color = `red`;
+      small.style.textAlign = "start";
+    }
+    if (request.status === 200) {
+      setTimeout(() => {
+        closeNotificationDiv.click();
+        return window.location.replace("./admins.html");
+      }, 2000);
+      hideSigningMessage(small);
+      modalNotifcation.style.display = "block";
+      modalNotifcation.innerText = `Profile Successfully updated`;
+    }
+  } catch (error) {
+    console.log(error);
   }
 });
 
@@ -189,18 +204,35 @@ const logoutUser = async () => {
 };
 
 const uploadButton = _("uploadButton");
-uploadButton.addEventListener("click", (e) => {
+const selectImage = _("selectImage");
+const loadingImage = _("loadingImage");
+uploadButton.addEventListener("click", async function (e) {
   e.preventDefault();
-  console.log("yes");
-});
-// IMAGE UPLOAD
-// const formData = new FormData();
-// formData.append("image_path", files[0]);
+  console.log(loadingImage);
+  hiddenButton.classList.add("hiddenButton");
+  selectImage.classList.add("hiddenButton");
+  loadingImage.innerText = `Uploading...`;
+  try {
+    const formData = new FormData();
+    console.log(files[0]);
+    formData.append("image_path", files[0]);
+    console.log(formData);
 
-// const config = {
-//   method: "post",
-//   headers: {
-//     Authorization: `Bearer ${token}`,
-//   },
-//   body: formData
-// };
+    const config = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    };
+    const request = await fetch(`${baseUrl}/profile-image/${userId}`, config);
+    if (request.status === 200) {
+      loadingImage.innerText = ``;
+      selectImage.classList.remove("hiddenButton");
+      const response = await request.json();
+      imgContainer.src = response.path;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});

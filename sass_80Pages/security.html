@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8" />
+    <title>Profile || SAS80</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"
+    />
+    <script src="./components/head.js"></script>
+    <!-- My Customize CSS -->
+    <link rel="stylesheet" href="./myAssets/profile/security/security.css" />
+    <!-- My Customize CSS Ends here -->
+  </head>
+
+  <body class="fixed-header no-header">
+    <!--SIDEBPANEL-->
+    <script src="/components/sidebar.js"></script>
+
+    <!-- START PAGE-CONTAINER -->
+    <div class="page-container">
+      <!-- HEADER -->
+      <script src="./components/header.js"></script>
+
+      <!-- START PAGE CONTENT WRAPPER -->
+      <div class="page-content-wrapper">
+        <!-- START PAGE CONTENT -->
+        <div class="content">
+          <div class="social-wrapper">
+            <div class="social" data-pages="social">
+              <!-- START JUMBOTRON -->
+              <!-- END JUMBOTRON -->
+              <div class="container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0">
+                <div class="feed">
+                  <!-- START DAY -->
+                  <div class="day" data-social="day">
+                    <!-- START ITEM -->
+                    <div
+                      class="
+                        card card-borderless
+                        no-border
+                        bg-transparent
+                        full-width
+                      "
+                      data-social="item"
+                    ></div>
+                    <br />
+                  </div>
+
+                  <div class="passwordParentElement">
+                    <div>
+                      <div class="row">
+                        <div class="col-8">
+                          <h3>Change Password</h3>
+                        </div>
+                      </div>
+
+                      <!-- success error message starts here -->
+                      <div
+                        class="alert alert-success hidden"
+                        id="success-message"
+                        role="alert"
+                      >
+                        <strong id="success-message-text"
+                          >Password Updated Successfully</strong
+                        >
+                      </div>
+                      <div class="signingMessage" id="signingMessage">
+                        <small>Updating Password...</small>
+                      </div>
+
+                      <!-- success error message starts here -->
+
+                      <!-- Failed error message starts here -->
+                      <div
+                        class="alert alert-danger hidden"
+                        id="error-message"
+                        role="alert"
+                      >
+                        <strong id="error-message-text"
+                          >Could not update Profile</strong
+                        >
+                      </div>
+                      <!-- Failed error message end here -->
+
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <!-- START card -->
+                          <div class="card card-default">
+                            <!-- <div class="card-header">
+                                  <div class="card-title">Option #one</div>
+                                </div> -->
+                            <div class="card-body">
+                              <span id="error-message"></span>
+                              <form class="" id="password-form" role="form">
+                                <div class="form-group form-group-default">
+                                  <label>Current Password</label>
+                                  <input
+                                    type="password"
+                                    id="current-profile-password"
+                                    class="form-control"
+                                    placeholder="enter current password"
+                                  />
+                                </div>
+                                <div class="form-group form-group-default">
+                                  <label>New Password</label>
+                                  <input
+                                    type="password"
+                                    id="new-profile-Password"
+                                    class="form-control"
+                                    placeholder="enter new password"
+                                  />
+                                </div>
+
+                                <div
+                                  class="form-group hidden"
+                                  id="confirm-password"
+                                >
+                                  <p>
+                                    You are trying to change your password,
+                                    please confirm your new password
+                                  </p>
+
+                                  <div class="form-group form-group-default">
+                                    <label>Confirm New Password</label>
+                                    <input
+                                      type="password"
+                                      id="confirm-profile-password"
+                                      class="form-control"
+                                      placeholder="confirm new password"
+                                    />
+                                  </div>
+                                </div>
+
+                                <button
+                                  class="
+                                    btn btn-default btn-cons btn-animated
+                                    from-left
+                                    pull-right
+                                  "
+                                  type="submit"
+                                >
+                                  Save
+                                </button>
+                              </form>
+                            </div>
+                          </div>
+                          <!-- END card -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END DAY -->
+                </div>
+                <!-- END FEED -->
+              </div>
+              <!-- END CONTAINER FLUID -->
+            </div>
+            <!-- /container -->
+          </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+
+        <!-- START COPYRIGHT -->
+        <script src="./components/footer.js"></script>
+        <!-- END COPYRIGHT -->
+      </div>
+      <!-- END PAGE CONTENT WRAPPER -->
+    </div>
+    <!-- END PAGE CONTAINER -->
+
+    <!-- END OVERLAY -->
+    <!-- BEGIN VENDOR JS -->
+    <script src="/components/script.js"></script>
+    <!-- My customize JS -->
+    <script src="./myAssets/profile/security/security.js"></script>
+    <!-- END PAGE LEVEL JS -->
+  </body>
+</html>

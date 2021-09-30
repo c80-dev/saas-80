@@ -10,7 +10,7 @@
     />
     <script src="./components/head.js"></script>
     <!-- My Customize CSS -->
-    <link rel="stylesheet" href="./myAssets/profile/profile.css" />
+    <link rel="stylesheet" href="./myAssets/profile/security/security.css" />
     <!-- My Customize CSS Ends here -->
   </head>
 
@@ -32,7 +32,7 @@
               <!-- START JUMBOTRON -->
               <div class="jumbotron" data-social="cover" data-pages="parallax">
                 <div class="cover-photo">
-                  <img alt="Cover photo" src="assets/img/social/cover.jpg" />
+                  <img alt="Cover photo" src="" />
                 </div>
                 <div
                   class="container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0"
@@ -95,11 +95,12 @@
                                     "
                                   >
                                     <img
+                                      id="imgContainer"
                                       alt="Avatar"
                                       id="profile-img"
-                                      width="55"
-                                      height="55"
-                                      src="assets/img/profiles/avatar.jpg"
+                                      width="32"
+                                      height="32"
+                                      src=""
                                     />
                                   </div>
                                   <br />
@@ -236,37 +237,6 @@
                                   class="form-control"
                                 />
                               </div>
-
-                              <div class="form-group form-group-default">
-                                <label>Password</label>
-                                <input
-                                  type="password"
-                                  id="profile-password"
-                                  class="form-control"
-                                  placeholder="**********"
-                                />
-                              </div>
-
-                              <div
-                                class="form-group hidden"
-                                id="confirm-password"
-                              >
-                                <p>
-                                  You are trying to change your password, please
-                                  confirm your new password
-                                </p>
-
-                                <div class="form-group form-group-default">
-                                  <label>Confirm Password</label>
-                                  <input
-                                    type="password"
-                                    id="confirm-profile-password"
-                                    class="form-control"
-                                    placeholder="**********"
-                                  />
-                                </div>
-                              </div>
-
                               <button
                                 class="
                                   btn btn-default btn-cons btn-animated

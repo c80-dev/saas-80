@@ -3,9 +3,12 @@ function selectProfileElement(x) {
   return document.getElementById(x);
 }
 
-const baseUrl = "https://saas80-laravel.herokuapp.com/api/v0.01";
+const baseUrl = "http://192.168.1.134:8000/api/v0.01";
 const token = sessionStorage.getItem("token");
 const userProfile = JSON.parse(sessionStorage.getItem("userProfile"));
+
+const imgContainer = document.getElementById("imgContainer");
+imgContainer.src = `${userProfile.image_path}`;
 
 document.title = `${userProfile.name} || C80 Pages`;
 const userId = userProfile.id;
@@ -28,13 +31,9 @@ const editProfile = async (event) => {
   const name = selectProfileElement("profile-name").value;
   const email = selectProfileElement("profile-email").value;
   const phonenumber = selectProfileElement("profile-phonenumber").value;
-  const password = selectProfileElement("profile-password").value;
   const facebook = selectProfileElement("profile-facebook").value;
   const twitter = selectProfileElement("profile-twitter").value;
   const linkedin = selectProfileElement("profile-twitter").value;
-  const confirmPassword = selectProfileElement(
-    "confirm-profile-password"
-  ).value;
 
   // remove hidden class from confirm password
   if (password && !confirmPassword) {
@@ -115,33 +114,33 @@ const editProfileImage = async (event) => {
   console.log(file);
 
   const formData = new FormData();
-  formData.append("file", file);
-
-  //   const request = await fetch(`${profile_url}/image`, {
-  //     method: "POST",
-  //     headers: { Authorization: `Bearer ${profile_token}` },
-  //     body: formData,
-  //   });
-
-  //   const response = await request.json();
-
-  //   icon.classList.add("text-success");
-  //   icon.classList.remove("text-warning");
-  //   icon.innerHTML = "camera";
-
-  // if (request.status !== 200) {
-  //   selectProfileElement("image-error-message").classList.remove("hidden");
-
-  //   setTimeout(() => {
-  //     selectProfileElement("image-error-message").classList.add("hidden");
-  //   }, 3000);
-  //   return;
-  // }
-
-  //   selectProfileElement("profile-img").src = response.user.image;
+  formData.append("image_path", file);
+  try {
+    const config = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    };
+    const request = await fetch(`${baseUrl}/profile-image/${userId}`, config);
+    const response = await request.json();
+    if (request.status === 200) {
+      imgContainer.src = ` ${response.path}`;
+      icon.classList.add("text-success");
+      icon.classList.remove("text-warning");
+      icon.innerHTML = "camera";
+      const userProfile = JSON.stringify(response.user);
+      sessionStorage.setItem("userProfile", userProfile);
+      console.log(JSON.parse(sessionStorage.getItem("userProfile")));
+      window.location.reload();
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-// This functionalit is use to upload an image
+// This functionality is use to upload an image
 selectProfileElement("profile-image").addEventListener(
   "change",
   function (event) {
@@ -170,9 +169,3 @@ const logoutUser = async () => {
     console.log(error);
   }
 };
-
-//removes updating profile message
-function hideSigningMessage(input) {
-  input.style.display = "none";
-  input.classList.remove("signingMessage");
-}
