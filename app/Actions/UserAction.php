@@ -3,7 +3,6 @@
 namespace App\Actions;
 
 use App\Models\User;
-use \Cviebrock\EloquentSluggable\Services\SlugService;
 use App\Http\Resources\UserResource;
 use App\Helpers\Cloudinary;
 use App\Helpers\Token;
@@ -12,6 +11,7 @@ use App\Mail\VerificationMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\Models\VerificationToken;
+use Illuminate\Support\Facades\Hash;
 
 class UserAction
 {
@@ -37,8 +37,7 @@ class UserAction
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'password' => bcrypt($request->password),
-            'slug' => SlugService::createSlug($this->model, 'slug', $request->name)
+            'password' => bcrypt($request->password)
         ]);
         $userRoles = auth()->user()->roles->pluck('name');
         if ($userRoles->contains('SuperAdmin')) {
@@ -133,9 +132,9 @@ class UserAction
            $update = $user->update([
              'name' => empty($request->name) ? $user->name : $request->name,
              'phone' =>   empty($request->phone) ? $user->phone : $request->phone,
-             'facebook' =>  empty($request->facebook) ? $user->facebook : "https://www.facebook.com/".$request->facebook,
-             'twitter' =>  empty($request->twitter) ? $user->twitter : "https://twitter.com/". $request->twitter,
-             'linkedin' =>  empty($request->linkedin) ? $user->linkedin : "https://www.linkedin.com/". $request->linkedin
+             'facebook' =>  empty($request->facebook) ? $user->facebook : $request->facebook,
+             'twitter' =>  empty($request->twitter) ? $user->twitter : $request->twitter,
+             'linkedin' =>  empty($request->linkedin) ? $user->linkedin : $request->linkedin
            ]);
            if ($update) {
                 return response()->json([
@@ -209,7 +208,8 @@ class UserAction
               ]);
               if ($image_add) {
                   return response()->json([
-                      'message' => 'User profile image updated successfully'
+                      'message' => 'User profile image updated successfully',
+                      'path' => $image_add->image_path
                   ], 200);
               }else {
                   return response()->json([

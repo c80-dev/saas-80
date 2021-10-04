@@ -2,15 +2,15 @@
 
 namespace App\Actions;
 
-use App\Models\FAQ;
-use App\Http\Resources\FAQResource;
+use App\Models\Role;
+use App\Http\Resources\RoleResource;
 
-class FAQAction
+class RoleAction
 {
 
     public $model;
 
-    public function __construct(FAQ $model)
+    public function __construct(Role $model)
     {
        $this->model = $model;
     }
@@ -19,17 +19,15 @@ class FAQAction
     public function create($request)
     {
         $user = $this->model->create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'category_id' => $request->category_id
+            'name' => $request->name
         ]);
         if ($user) {
             return response()->json([
-                'message' => 'FAQ created successfully',
+                'message' => 'Role created successfully',
             ], 200);
         }else {
            return response()->json([
-               'message' => 'Sorry unable to faq'
+               'message' => 'Sorry unable to role'
            ], 400);
         }
     }
@@ -37,13 +35,13 @@ class FAQAction
     //get
     public function all()
     {
-      $faqs = $this->model->with(['category'])->latest()->paginate(20);
-      if (count($faqs) < 1) {
+      $roles = $this->model->latest()->paginate(20);
+      if (count($roles) < 1) {
         return response()->json([
-            'message' => 'Sorry no faq found'
+            'message' => 'Sorry no role found'
         ], 400);
       }else {
-          return FAQResource::collection($faqs);
+          return RoleResource::collection($roles);
       }
     }
 
@@ -52,8 +50,8 @@ class FAQAction
     {
       $data = $this->model->where('id', '=', $id)->exists();
       if ($data) {
-          $faq = $this->model->with(['category'])->find($id);
-          return new FAQResource($faq);
+          $role = $this->model->find($id);
+          return new RoleResource($role);
       }else {
            return response()->json([
                'message' => 'Sorry this data do not exist'
@@ -61,25 +59,38 @@ class FAQAction
       }
     }
 
+    public function attachPermissionToRole($request, $id)
+    {
+        $data = $this->model->where('id', '=', $id)->exists();
+        if ($data) {
+            $role = $this->model->find($id);
+            $role->permissions()->attach($request->permisson_id);
+            return response()->json([
+                'message' => 'Permission attached to role successfully',
+            ], 200);
+        }else {
+             return response()->json([
+                 'message' => 'Sorry this data do not exist'
+             ], 400);
+        }
+    }
+
     //update
     public function update($request, $id)
     {
         $data = $this->model->where('id', '=', $id)->exists();
         if ($data) {
-           $faq = $this->model->find($id);
-           $faq->slug = null;
-           $update = $faq->update([
-                'title' =>  empty($request->title) ? $faq->title :  $request->title,
-                'description' =>  empty($request->description) ? $faq->description : $request->description,
-                'category_id' =>  empty($request->category_id) ? $faq->category_id : $request->category_id
+           $role = $this->model->find($id);
+           $update = $role->update([
+                'name' =>  empty($request->name) ? $role->name :  $request->name,
            ]);
            if ($update) {
              return response()->json([
-                 'message' => 'FAQ updated successfully'
+                 'message' => 'Role updated successfully'
              ], 200);
            }else {
               return response()->json([
-                  'message' => 'Sorry unable to update faq'
+                  'message' => 'Sorry unable to update role'
               ], 400);
            }
         }else {
@@ -97,11 +108,11 @@ class FAQAction
             $delete =  $this->model->find($id)->delete();
             if ($delete) {
               return response()->json([
-                   'message' => 'FAQ deleted successfully'
+                   'message' => 'Role deleted successfully'
                ], 200);
             }else {
                return response()->json([
-                   'message' => 'Sorry unable to delete faq'
+                   'message' => 'Sorry unable to delete role'
                ], 400);
             }
         }else {
@@ -110,4 +121,5 @@ class FAQAction
           ], 404);
         }
     }
+    
 }

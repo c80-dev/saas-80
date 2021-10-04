@@ -2,15 +2,15 @@
 
 namespace App\Actions;
 
-use App\Models\FAQ;
-use App\Http\Resources\FAQResource;
+use App\Models\Permission;
+use App\Http\Resources\PermissionResource;
 
-class FAQAction
+class PermissionAction
 {
 
     public $model;
 
-    public function __construct(FAQ $model)
+    public function __construct(Permission $model)
     {
        $this->model = $model;
     }
@@ -19,17 +19,15 @@ class FAQAction
     public function create($request)
     {
         $user = $this->model->create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'category_id' => $request->category_id
+            'name' => $request->name
         ]);
         if ($user) {
             return response()->json([
-                'message' => 'FAQ created successfully',
+                'message' => 'Permission created successfully',
             ], 200);
         }else {
            return response()->json([
-               'message' => 'Sorry unable to faq'
+               'message' => 'Sorry unable to permission'
            ], 400);
         }
     }
@@ -37,13 +35,13 @@ class FAQAction
     //get
     public function all()
     {
-      $faqs = $this->model->with(['category'])->latest()->paginate(20);
-      if (count($faqs) < 1) {
+      $permissions = $this->model->latest()->paginate(20);
+      if (count($permissions) < 1) {
         return response()->json([
-            'message' => 'Sorry no faq found'
+            'message' => 'Sorry no permission found'
         ], 400);
       }else {
-          return FAQResource::collection($faqs);
+          return PermissionResource::collection($permissions);
       }
     }
 
@@ -52,8 +50,8 @@ class FAQAction
     {
       $data = $this->model->where('id', '=', $id)->exists();
       if ($data) {
-          $faq = $this->model->with(['category'])->find($id);
-          return new FAQResource($faq);
+          $permission = $this->model->with(['faqs'])->find($id);
+          return new PermissionResource($permission);
       }else {
            return response()->json([
                'message' => 'Sorry this data do not exist'
@@ -66,20 +64,17 @@ class FAQAction
     {
         $data = $this->model->where('id', '=', $id)->exists();
         if ($data) {
-           $faq = $this->model->find($id);
-           $faq->slug = null;
-           $update = $faq->update([
-                'title' =>  empty($request->title) ? $faq->title :  $request->title,
-                'description' =>  empty($request->description) ? $faq->description : $request->description,
-                'category_id' =>  empty($request->category_id) ? $faq->category_id : $request->category_id
+           $permission = $this->model->find($id);
+           $update = $permission->update([
+                'name' =>  empty($request->name) ? $permission->name :  $request->name,
            ]);
            if ($update) {
              return response()->json([
-                 'message' => 'FAQ updated successfully'
+                 'message' => 'Permission updated successfully'
              ], 200);
            }else {
               return response()->json([
-                  'message' => 'Sorry unable to update faq'
+                  'message' => 'Sorry unable to update permission'
               ], 400);
            }
         }else {
@@ -97,11 +92,11 @@ class FAQAction
             $delete =  $this->model->find($id)->delete();
             if ($delete) {
               return response()->json([
-                   'message' => 'FAQ deleted successfully'
+                   'message' => 'Permission deleted successfully'
                ], 200);
             }else {
                return response()->json([
-                   'message' => 'Sorry unable to delete faq'
+                   'message' => 'Sorry unable to delete permission'
                ], 400);
             }
         }else {
@@ -110,4 +105,5 @@ class FAQAction
           ], 404);
         }
     }
+    
 }

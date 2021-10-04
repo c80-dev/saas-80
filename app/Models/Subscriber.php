@@ -14,13 +14,11 @@ class Subscriber extends Model
         'user_id', 'plan_id', 'from', 'to', 'status'
     ];
 
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
+    public function user()  {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function plan(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
+    public function plan()  {
         return $this->belongsTo(Plan::class, 'plan_id', 'id');
     }
 

@@ -4,7 +4,6 @@ namespace App\Actions;
 
 use App\Models\Plan;
 use App\Http\Resources\PlanResource;
-use \Cviebrock\EloquentSluggable\Services\SlugService;
 use App\Http\Resources\SubscriberResource;
 
 class PlanAction
@@ -25,7 +24,6 @@ class PlanAction
             'description' => $request->description,
             'duration' => $request->duration,
             'cost' => $request->cost,
-            'slug' => SlugService::createSlug($this->model, 'slug', $request->name),
             'properties' => json_encode($request->properties)
         ]);
         if ($user) {

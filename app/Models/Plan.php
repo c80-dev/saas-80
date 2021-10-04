@@ -14,13 +14,11 @@ class Plan extends Model
         'name', 'description', 'duration', 'cost', 'slug', 'properties'
     ];
 
-    public function subscribers(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
+    public function subscribers() {
       return $this->hasMany(Subscriber::class);
     }
 
-    public function transactions(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
+    public function transactions()  {
         return $this->hasMany(Transaction::class);
     }
 

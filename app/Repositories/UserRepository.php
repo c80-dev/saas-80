@@ -87,26 +87,26 @@ class UserRepository implements UserRepositoryInterface
       }
 
       //change  user password
-      public function changePassword($request, $id)
-      {
-          $validator =  Validator::make($request->all(),[
-              'old_password' => 'required',
-              'password' => 'required|confirmed'
-          ]);
-          if ($validator->fails()) {
-            return response()->json([
-                'message' => $validator->messages()->first()
-            ], 422);
-          }else {
-              return $this->action->password($request);
-          }
-      }
-
-       //delete user
-        public function deleteUser($id)
-        {
-            return $this->action->delete($id);
+    public function changePassword($request, $id)
+    {
+        $validator =  Validator::make($request->all(),[
+            'old_password' => 'required',
+            'password' => 'required|confirmed'
+        ]);
+        if ($validator->fails()) {
+          return response()->json([
+              'message' => $validator->errors()->first()
+          ], 422);
+        }else {
+            return $this->action->password($request, $id);
         }
+    }
+
+    //delete user
+    public function deleteUser($id)
+    {
+        return $this->action->delete($id);
+    }
 
 
 }

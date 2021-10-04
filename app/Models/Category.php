@@ -13,8 +13,7 @@ class Category extends Model
         'name'
     ];
 
-    public function faqs(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
+    public function faqs() {
         return $this->hasMany(FAQ::class);
     }
 }

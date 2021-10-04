@@ -6,14 +6,15 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Concerns\UsesUuid;
+use App\Models\Traits\UsesUuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Models\Traits\HasPermissionsTrait;
 
 class User extends Authenticatable implements  MustVerifyEmail, JWTSubject
 {
-    use HasFactory, Notifiable, UsesUuid, SoftDeletes, Sluggable;
+    use HasFactory, Notifiable, UsesUuid, SoftDeletes, Sluggable, HasPermissionsTrait;
 
     protected $fillable = ['name','email','password','phone','facebook','twitter','linkedin','image_path','slug', 'is_subscribed'];
 
@@ -35,18 +36,11 @@ class User extends Authenticatable implements  MustVerifyEmail, JWTSubject
         return [];
     }
 
-    public function roles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(Role::class);
-    }
-
-    public function subscribers(): \Illuminate\Database\Eloquent\Relations\HasOne
-    {
+    public function subscribers() {
         return $this->hasOne(Subscriber::class);
     }
 
-    public function logs(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
+    public function logs() {
         return $this->hasMany(Log::class);
     }
 

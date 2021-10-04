@@ -61,6 +61,18 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\CategoryRepository::class
         );
 
+        //permission repository binding
+        $this->app->bind(
+            \App\Repositories\Contracts\PermissionRepositoryInterface::class,
+            \App\Repositories\PermissionRepository::class
+        );
+
+        //role repository binding
+        $this->app->bind(
+            \App\Repositories\Contracts\RoleRepositoryInterface::class,
+            \App\Repositories\RoleRepository::class
+        );
+
     }
 
     /**
