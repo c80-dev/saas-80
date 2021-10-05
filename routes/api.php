@@ -77,6 +77,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'v0.01'], function ($router) {
                     Route::post('/roles', [App\Http\Controllers\Api\RoleController::class, 'store']);
                     Route::patch('/roles/{id}', [App\Http\Controllers\Api\RoleController::class, 'update']);
                     Route::patch('/roles-permission/{id}', [App\Http\Controllers\Api\RoleController::class, 'attachPermissionToRole']);
+                    Route::delete('/roles-permission/{id}', [App\Http\Controllers\Api\RoleController::class, 'detachPermissionFromRole']);
                     Route::delete('/roles/{id}', [App\Http\Controllers\Api\RoleController::class, 'destroy']);
 
                  //permissons routes
@@ -92,6 +93,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'v0.01'], function ($router) {
 
                 Route::get('/users', [App\Http\Controllers\Api\UserController::class, 'index']);
                     Route::get('/users/{id}', [App\Http\Controllers\Api\UserController::class, 'show']);
+                    Route::patch('/users-permission/{id}', [App\Http\Controllers\Api\UserController::class, 'attachPermissionToUser']);
+                    Route::delete('/users-permission/{id}', [App\Http\Controllers\Api\UserController::class, 'detachPermissionFromUser']);
 
                 Route::delete('/subscribers/{id}', [App\Http\Controllers\Api\SubscriberController::class, 'destroy']);
                 Route::get('/deactivate-subscribers/{id}', [App\Http\Controllers\Api\SubscriberController::class, 'deActivateSubscriber']);

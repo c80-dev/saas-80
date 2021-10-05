@@ -197,6 +197,44 @@ class UserAction
          }
     }
 
+    //attach permission to user
+    public function attachPermissionToUser($request, $id)
+    {
+        $data = $this->model->where('id', '=', $id)->exists();
+        if ($data) {
+            $user = $this->model->find($id);
+            foreach ($request->permisson_id as $permission) {
+                $user->permissions()->attach($permission);
+            }
+            return response()->json([
+                'message' => 'Permission attached to user successfully',
+            ], 200);
+        }else {
+             return response()->json([
+                 'message' => 'Sorry this data do not exist'
+             ], 400);
+        }
+    }
+
+    //detach permission to user
+    public function detachPermissionFromUser($request, $id)
+    {
+        $data = $this->model->where('id', '=', $id)->exists();
+        if ($data) {
+            $user = $this->model->find($id);
+            foreach ($request->permisson_id as $permission) {
+                $user->permissions()->detach($permission);
+            }
+            return response()->json([
+                'message' => 'Permission detached from user successfully',
+            ], 200);
+        }else {
+             return response()->json([
+                 'message' => 'Sorry this data do not exist'
+             ], 400);
+        }
+    }
+
     //update user profile image
     public function image($request, $id)
     {
@@ -209,7 +247,7 @@ class UserAction
               if ($image_add) {
                   return response()->json([
                       'message' => 'User profile image updated successfully',
-                      'path' => $image_add->image_path
+                      'path' => $user->image_path
                   ], 200);
               }else {
                   return response()->json([

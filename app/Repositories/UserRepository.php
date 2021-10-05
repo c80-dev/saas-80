@@ -21,7 +21,7 @@ class UserRepository implements UserRepositoryInterface
           $validator =  Validator::make($request->all(),[
               'name' => 'required|regex:/^([^0-9]*)$/',
               'email' => 'required|email|unique:users',
-              'phone' => 'required|unique:users|max:11|min:11',
+              'phone' => 'required|unique:users|max:11|min:11|regex:/^\+234[0-9]{10}',
               'password' => 'required|confirmed'
           ]);
 
@@ -56,7 +56,7 @@ class UserRepository implements UserRepositoryInterface
       {
           $validator =  Validator::make($request->all(),[
               'name' => 'sometimes',
-              'phone' => 'nullable|sometimes|unique:users|max:11|min:11',
+              'phone' => 'nullable|sometimes|unique:users|max:11|min:11|regex:/^\+234[0-9]{10}',
               'facebook' => 'nullable|sometimes|url',
               'twitter' => 'nullable|sometimes|url',
               'linkedin' => 'nullable|sometimes|url'
@@ -85,6 +85,38 @@ class UserRepository implements UserRepositoryInterface
                 return $this->action->image($request, $id);
             }
       }
+
+    //attach permission
+    public function attachPermission($request, $id)
+    {
+        $validator =  Validator::make($request->all(),[
+            'permisson_id' => 'required|array',
+        ]);
+ 
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->messages()->first()
+            ], 422);
+        }else {
+             return $this->action->attachPermissionToUser($request, $id);
+        }
+    }
+
+    //detach permission
+    public function detachPermission($request, $id)
+    {
+        $validator =  Validator::make($request->all(),[
+            'permisson_id' => 'required|array',
+        ]);
+ 
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->messages()->first()
+            ], 422);
+        }else {
+             return $this->action->detachPermissionFromUser($request, $id);
+        }
+    }
 
       //change  user password
     public function changePassword($request, $id)

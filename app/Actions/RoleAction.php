@@ -59,14 +59,36 @@ class RoleAction
       }
     }
 
+    //attach 
     public function attachPermissionToRole($request, $id)
     {
         $data = $this->model->where('id', '=', $id)->exists();
         if ($data) {
             $role = $this->model->find($id);
-            $role->permissions()->attach($request->permisson_id);
+            foreach ($request->permisson_id as $permission) {
+                $role->permissions()->attach($permission);
+            }
             return response()->json([
                 'message' => 'Permission attached to role successfully',
+            ], 200);
+        }else {
+             return response()->json([
+                 'message' => 'Sorry this data do not exist'
+             ], 400);
+        }
+    }
+
+    //detach permission to user
+    public function detachPermissionFromRole($request, $id)
+    {
+        $data = $this->model->where('id', '=', $id)->exists();
+        if ($data) {
+            $role = $this->model->find($id);
+            foreach ($request->permisson_id as $permission) {
+                $role->permissions()->detach($permission);
+            }
+            return response()->json([
+                'message' => 'Permission detached from role successfully',
             ], 200);
         }else {
              return response()->json([

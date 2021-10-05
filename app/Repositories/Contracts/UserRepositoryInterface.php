@@ -18,5 +18,9 @@ interface UserRepositoryInterface
 
     public function updateImage($request, $id);
 
+    public function attachPermission($request, $id);
+
+    public function detachPermission($request, $id);
+
     public function deleteUser($id);
 }

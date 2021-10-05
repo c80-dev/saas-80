@@ -14,5 +14,7 @@ interface RoleRepositoryInterface
 
     public function attachPermission($request, $id);
 
+    public function detachPermission($request, $id);
+
     public function deleteRole($id);
 }

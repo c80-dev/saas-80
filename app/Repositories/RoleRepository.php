@@ -37,10 +37,11 @@ class RoleRepository implements RoleRepositoryInterface
         return $this->action->all();
     }
 
+    //attach permission
     public function attachPermission($request, $id)
     {
         $validator =  Validator::make($request->all(),[
-            'permisson_id' => 'required',
+            'permisson_id' => 'required|array',
         ]);
  
         if ($validator->fails()) {
@@ -49,6 +50,21 @@ class RoleRepository implements RoleRepositoryInterface
             ], 422);
         }else {
              return $this->action->attachPermissionToRole($request, $id);
+        }
+    }
+
+    //detach permission
+    public function detachPermission($request, $id)
+    {
+        $validator =  Validator::make($request->all(),[
+            'permisson_id' => 'required|array',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->messages()->first()
+            ], 422);
+        }else {
+             return $this->action->detachPermissionFromRole($request, $id);
         }
     }
 

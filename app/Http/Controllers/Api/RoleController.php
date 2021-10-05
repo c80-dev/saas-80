@@ -41,6 +41,11 @@ class RoleController extends Controller
         return $this->roleRepository->attachPermission($request, $id);
     }
 
+    public function detachPermissionFromRole(Request $request, $id)
+    {
+        return $this->roleRepository->detachPermission($request, $id);
+    }
+
     public function destroy($id)
     {
         return $this->roleRepository->deleteRole($id);
