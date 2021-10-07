@@ -15,13 +15,11 @@ class ResetPasswordController extends Controller
         $this->resetPasswordRepository = $resetPasswordRepository;
     }
 
-    //send password reset link
     public function send(Request $request)
     {
         return $this->resetPasswordRepository->sendPasswordResetLink($request);
     }
-
-    //reset password
+    
     public function reset(Request $request)
     {
         return $this->resetPasswordRepository->resetPassword($request);

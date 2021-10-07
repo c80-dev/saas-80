@@ -24,23 +24,10 @@ Route::group(['middleware' => 'api', 'prefix' => 'v0.01'], function ($router) {
 
         Route::group(['middleware' => ['jwt.verify']], function() {
 
-            //roles for user
-            Route::group(['middleware' => 'role:admin'], function() {
-             
-            });
+            Route::group(['middleware' => ['role:admin']], function() { 
 
-            // roles for super admin
-            Route::group(['middleware' => 'role:superadmin'], function() {
-
-
-                 //categories routes
-                 Route::get('/categories', [App\Http\Controllers\Api\CategoryController::class, 'index']);
-                    Route::get('/categories/{id}', [App\Http\Controllers\Api\CategoryController::class, 'show']);
-                    Route::post('/categories', [App\Http\Controllers\Api\CategoryController::class, 'store']);
-                    Route::patch('/categories/{id}', [App\Http\Controllers\Api\CategoryController::class, 'update']);
-                    Route::delete('/categories/{id}', [App\Http\Controllers\Api\CategoryController::class, 'destroy']);
-
-                Route::post('/create-account', [App\Http\Controllers\Api\UserController::class, 'createUser']);
+                Route::get('/faqs', [App\Http\Controllers\Api\FAQController::class, 'index']);
+                    Route::get('/faqs/{id}', [App\Http\Controllers\Api\FAQController::class, 'show']);
 
                 Route::post('/logout', [App\Http\Controllers\Api\AuthController::class, 'logout']);
                     Route::post('/refresh', [App\Http\Controllers\Api\AuthController::class, 'refresh']);
@@ -49,21 +36,33 @@ Route::group(['middleware' => 'api', 'prefix' => 'v0.01'], function ($router) {
                     Route::patch('/update-profile/{id}', [App\Http\Controllers\Api\UserController::class, 'updateUserAccount']);
                     Route::post('/profile-image/{id}', [App\Http\Controllers\Api\UserController::class, 'updateImage']);
 
-
                 Route::get('/plans', [App\Http\Controllers\Api\PlanController::class, 'index']);
                     Route::get('/plans/{id}', [App\Http\Controllers\Api\PlanController::class, 'show']);
-                    Route::get('/plan-subscribers/{id}', [App\Http\Controllers\Api\PlanController::class, 'getSinglePlanSubscribers']);
+
+                Route::post('/subscribers', [App\Http\Controllers\Api\SubscriberController::class, 'store']);
+
+            });
+
+            // roles for super admin
+            Route::group(['middleware' => ['role:superadmin']], function() {
+
+                 //categories routes
+                Route::get('/categories', [App\Http\Controllers\Api\CategoryController::class, 'index']);
+                    Route::get('/categories/{id}', [App\Http\Controllers\Api\CategoryController::class, 'show']);
+                    Route::post('/categories', [App\Http\Controllers\Api\CategoryController::class, 'store']);
+                    Route::patch('/categories/{id}', [App\Http\Controllers\Api\CategoryController::class, 'update']);
+                    Route::delete('/categories/{id}', [App\Http\Controllers\Api\CategoryController::class, 'destroy']);
+
+                Route::post('/create-account', [App\Http\Controllers\Api\UserController::class, 'createUser']);
+
+                Route::get('/plan-subscribers/{id}', [App\Http\Controllers\Api\PlanController::class, 'getSinglePlanSubscribers']);
 
                 Route::get('/transactions', [App\Http\Controllers\Api\TransactionController::class, 'index']);
                     Route::get('/transactions/{id}', [App\Http\Controllers\Api\TransactionController::class, 'show']);
                     Route::delete('/transactions/{id}', [App\Http\Controllers\Api\TransactionController::class, 'destroy']);
 
                 Route::get('/subscribers', [App\Http\Controllers\Api\SubscriberController::class, 'index']);
-                    Route::post('/subscribers', [App\Http\Controllers\Api\SubscriberController::class, 'store']);
                     Route::get('/subscribers/{id}', [App\Http\Controllers\Api\SubscriberController::class, 'show']);
-
-                Route::get('/faqs', [App\Http\Controllers\Api\FAQController::class, 'index']);
-                    Route::get('/faqs/{id}', [App\Http\Controllers\Api\FAQController::class, 'show']);
 
                 Route::get('/verify/{id}',  [App\Helpers\Payment::class, 'verify']);
 

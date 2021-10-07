@@ -15,7 +15,6 @@ class EmailVerificationController extends Controller
         $this->repository =  $repository;
     }
 
-    //verify email
     public function verify(Request $request)
     {
         return $this->repository->verifyEmailAddress($request);

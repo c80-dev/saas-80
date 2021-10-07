@@ -17,19 +17,16 @@ class AuthController extends Controller
         $this->authRepository = $authRepository;
     }
 
-    //login user
     public function login(Request $request)
     {
         return $this->authRepository->login($request);
     }
 
-    //logout user
     public function logout(Request $request)
     {
         return $this->authRepository->logout($request);
     }
 
-    //user profile
     public function userProfile()
     {
         return $this->authRepository->userProfile();
