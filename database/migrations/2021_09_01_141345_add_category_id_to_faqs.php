@@ -14,7 +14,7 @@ class AddCategoryIdToFaqs extends Migration
     public function up()
     {
         Schema::table('faqs', function (Blueprint $table) {
-            $table->foreignId('category_id')->constrained();
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
         });
     }
 
@@ -26,7 +26,7 @@ class AddCategoryIdToFaqs extends Migration
     public function down()
     {
         Schema::table('faqs', function (Blueprint $table) {
-            Schema::dropIfExists('category_id')->onDelete('cascade');
+            Schema::dropIfExists('category_id');
         });
     }
 }

@@ -21,7 +21,7 @@ class UserRepository implements UserRepositoryInterface
           $validator =  Validator::make($request->all(),[
               'name' => 'required|regex:/^([^0-9]*)$/',
               'email' => 'required|email|unique:users',
-              'phone' => 'required|unique:users|max:11|min:11|regex:/^\+234[0-9]{10}',
+              'phone' => 'required|unique:users|max:11|min:11',
               'password' => 'required|confirmed'
           ]);
 
@@ -56,7 +56,7 @@ class UserRepository implements UserRepositoryInterface
       {
           $validator =  Validator::make($request->all(),[
               'name' => 'sometimes',
-              'phone' => 'nullable|sometimes|unique:users|max:11|min:11|regex:/^\+234[0-9]{10}',
+              'phone' => 'nullable|sometimes|unique:users|max:11|min:11',
               'facebook' => 'nullable|sometimes|url',
               'twitter' => 'nullable|sometimes|url',
               'linkedin' => 'nullable|sometimes|url'
@@ -118,7 +118,7 @@ class UserRepository implements UserRepositoryInterface
         }
     }
 
-      //change  user password
+    //change  user password
     public function changePassword($request, $id)
     {
         $validator =  Validator::make($request->all(),[
